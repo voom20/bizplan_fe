@@ -3,15 +3,10 @@
  * 
  * 파일 용도:
  * 재사용 가능한 버튼 컴포넌트
- * - 다양한 스타일 variant 제공 (primary, secondary, outline, ghost, danger)
+ * - 다양한 스타일 variant 제공 (neon, secondary, outline, ghost, danger)
  * - 3가지 크기 옵션 (sm, md, lg)
  * - 로딩 상태 지원
- * - 표준 HTML 버튼 속성 모두 지원
- * 
- * 사용 예시:
- * <Button variant="primary" size="lg" isLoading={isSubmitting}>
- *   제출하기
- * </Button>
+ * - 다크 테마 + 네온 스타일
  */
 
 import React from 'react';
@@ -19,7 +14,7 @@ import { cn } from '../../lib/utils';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /** 버튼 스타일 변형 */
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
+  variant?: 'neon' | 'secondary' | 'outline' | 'ghost' | 'danger';
   /** 버튼 크기 */
   size?: 'sm' | 'md' | 'lg';
   /** 로딩 상태 (스피너 표시 및 비활성화) */
@@ -30,17 +25,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 /**
  * Button 컴포넌트
- * 
- * 역할:
- * - 애플리케이션 전체에서 일관된 버튼 UI 제공
- * - 다양한 상황에 맞는 스타일과 크기 옵션
- * - 로딩/비활성화 상태 처리
- * 
- * @param {ButtonProps} props - 버튼 속성
- * @returns {JSX.Element} 버튼 엘리먼트
+ * 다크 테마에 최적화된 네온 스타일 버튼
  */
 export const Button: React.FC<ButtonProps> = ({
-  variant = 'primary',
+  variant = 'neon',
   size = 'md',
   isLoading = false,
   className,
@@ -48,20 +36,51 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg';
+  const baseStyles = cn(
+    'inline-flex items-center justify-center font-semibold',
+    'transition-all duration-300 ease-out',
+    'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900',
+    'disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none',
+    'rounded-xl'
+  );
   
   const variants = {
-    primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500',
-    secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500',
-    outline: 'border-2 border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500',
-    ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-500',
-    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
+    neon: cn(
+      'bg-gradient-to-r from-neon-400 to-neon-500 text-slate-900',
+      'hover:from-neon-300 hover:to-neon-400',
+      'shadow-lg shadow-neon-500/25 hover:shadow-neon-500/40',
+      'hover:-translate-y-0.5',
+      'focus:ring-neon-500'
+    ),
+    secondary: cn(
+      'bg-slate-800 text-slate-100',
+      'hover:bg-slate-700',
+      'border border-slate-700 hover:border-slate-600',
+      'focus:ring-slate-500'
+    ),
+    outline: cn(
+      'bg-transparent text-neon-400',
+      'border-2 border-neon-500/50 hover:border-neon-400',
+      'hover:bg-neon-500/10',
+      'focus:ring-neon-500'
+    ),
+    ghost: cn(
+      'bg-transparent text-slate-300',
+      'hover:bg-white/10 hover:text-white',
+      'focus:ring-slate-500'
+    ),
+    danger: cn(
+      'bg-gradient-to-r from-red-500 to-red-600 text-white',
+      'hover:from-red-400 hover:to-red-500',
+      'shadow-lg shadow-red-500/25 hover:shadow-red-500/40',
+      'focus:ring-red-500'
+    ),
   };
   
   const sizes = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-base',
-    lg: 'px-6 py-3 text-lg',
+    sm: 'px-4 py-2 text-sm',
+    md: 'px-5 py-2.5 text-base',
+    lg: 'px-8 py-3.5 text-lg',
   };
 
   return (
@@ -96,4 +115,3 @@ export const Button: React.FC<ButtonProps> = ({
     </button>
   );
 };
-
