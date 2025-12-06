@@ -1,12 +1,12 @@
-# StartupPlan - AI 기반 사업계획서 작성 플랫폼
+# BizPlan - AI 기반 사업계획서 작성 플랫폼
 
 <div align="center">
 
-![StartupPlan](https://img.shields.io/badge/StartupPlan-AI%20Business%20Plan-22c55e?style=for-the-badge&logo=rocket&logoColor=white)
+![BizPlan](https://img.shields.io/badge/BizPlan-AI%20Business%20Plan-22c55e?style=for-the-badge&logo=rocket&logoColor=white)
 
 **초기 창업가를 위한 SaaS형 비즈니스 컨설팅 플랫폼**
 
-[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)](https://react.dev/)
+[![React](https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-7.2-646CFF?style=flat-square&logo=vite)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
@@ -23,6 +23,28 @@
 - ⚡ **실시간 저장** - 입력 즉시 자동 저장
 - 📊 **재무 시뮬레이션** - 실시간 차트와 손익분기점 분석
 - 🎯 **PMF 진단** - Product-Market Fit 점수 및 개선 제안
+
+---
+
+## 📊 코드 품질 현황
+
+```
+┌────────────────────────────────────────────────────┐
+│  종합 점수: 86/100 (B+)                             │
+│  평가: 프로덕션 준비 완료                            │
+└────────────────────────────────────────────────────┘
+
+평가 항목별 점수:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+가독성      ████████████████████ 90/100  (A)
+재사용성    █████████████████████ 92/100  (A)
+유지보수성  █████████████████    85/100  (B+)
+일관성      ██████████████████████ 95/100  (A+)
+성능        ██████████████       70/100  (C+)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+> 상세 분석 문서는 [`docs/`](./docs/) 디렉토리에서 확인할 수 있습니다.
 
 ---
 
@@ -57,29 +79,31 @@
 ### Core
 | 기술 | 버전 | 용도 |
 |------|------|------|
-| React | 19.2 | UI 프레임워크 |
-| TypeScript | 5.9 | 타입 안정성 |
-| Vite | 7.2 | 빌드 도구 |
+| React | 19.2.0 | UI 프레임워크 |
+| TypeScript | 5.9.3 | 타입 안정성 |
+| Vite | 7.2.4 | 빌드 도구 |
 
 ### Styling & UI
-| 기술 | 용도 |
-|------|------|
-| Tailwind CSS | 유틸리티 기반 스타일링 |
-| Lucide React | 아이콘 시스템 |
-| clsx + tailwind-merge | 조건부 클래스 결합 |
+| 기술 | 버전 | 용도 |
+|------|------|------|
+| Tailwind CSS | 3.4.1 | 유틸리티 기반 스타일링 |
+| Lucide React | 0.554.0 | 아이콘 시스템 |
+| clsx | 2.1.1 | 조건부 클래스 결합 |
+| tailwind-merge | 3.4.0 | Tailwind 클래스 병합 |
 
 ### State & Data
-| 기술 | 용도 |
-|------|------|
-| Zustand | 전역 상태 관리 (persist middleware) |
-| React Router DOM v6 | 클라이언트 사이드 라우팅 |
-| React Hook Form + Zod | 폼 관리 및 검증 |
+| 기술 | 버전 | 용도 |
+|------|------|------|
+| Zustand | 5.0.8 | 전역 상태 관리 (persist middleware) |
+| React Router DOM | 7.9.6 | 클라이언트 사이드 라우팅 |
+| React Hook Form | 7.66.1 | 폼 관리 |
+| Zod | 4.1.12 | 스키마 검증 |
 
 ### Visualization
-| 기술 | 용도 |
-|------|------|
-| Recharts | 재무 차트 시각화 |
-| React Markdown | 마크다운 렌더링 |
+| 기술 | 버전 | 용도 |
+|------|------|------|
+| Recharts | 3.4.1 | 재무 차트 시각화 |
+| React Markdown | 10.1.0 | 마크다운 렌더링 |
 
 ---
 
@@ -87,8 +111,8 @@
 
 ```bash
 # 저장소 클론
-git clone https://github.com/voom20/Issue-Automation.git
-cd Issue-Automation
+git clone https://github.com/voom20/bizplan_fe.git
+cd bizplan_fe
 
 # 의존성 설치
 npm install
@@ -110,44 +134,62 @@ npm run preview
 ## 📁 프로젝트 구조
 
 ```
-src/
-├── components/
-│   ├── ui/                      # 공통 UI 컴포넌트 (글래스모피즘 스타일)
-│   │   ├── Button.tsx           # 네온 글로우 버튼
-│   │   ├── Card.tsx             # 글래스 카드
-│   │   ├── Input.tsx            # 글래스 입력 필드
-│   │   ├── Textarea.tsx         # 글래스 텍스트 영역
-│   │   ├── Badge.tsx            # 상태 배지
-│   │   ├── Progress.tsx         # 네온 진행률 바
-│   │   ├── Spinner.tsx          # 로딩 스피너
-│   │   └── index.ts             # 컴포넌트 exports
-│   ├── wizard/                  # Wizard 전용 컴포넌트
-│   │   ├── QuestionForm.tsx     # 질문 폼
-│   │   ├── FinancialSimulation.tsx  # 재무 시뮬레이션
-│   │   └── PMFSurvey.tsx        # PMF 설문
-│   ├── Layout.tsx               # 메인 레이아웃 (다크 테마)
-│   └── SaveIndicator.tsx        # 저장 상태 표시
-├── pages/
-│   ├── ProjectCreate.tsx        # 프로젝트 생성 (메인 페이지)
-│   ├── WizardStep.tsx           # Wizard 단계별 페이지
-│   └── BusinessPlanViewer.tsx   # 사업계획서 뷰어
-├── stores/
-│   ├── useProjectStore.ts       # 프로젝트 상태 관리
-│   ├── useWizardStore.ts        # Wizard 상태 관리
-│   ├── useFinancialStore.ts     # 재무 상태 관리
-│   └── usePMFStore.ts           # PMF 진단 상태 관리
-├── hooks/
-│   ├── useAutoSave.ts           # Auto-save 커스텀 훅
-│   ├── useFinancialCalc.ts      # 재무 계산 커스텀 훅
-│   └── index.ts                 # 훅 exports
-├── types/
-│   ├── index.ts                 # TypeScript 타입 정의
-│   └── mockData.ts              # Mock 데이터
-├── lib/
-│   └── utils.ts                 # 유틸리티 함수 (cn)
-├── App.tsx                      # 라우팅 설정
-├── main.tsx                     # 앱 진입점
-└── index.css                    # 전역 스타일 (다크 테마)
+bizplan_fe/
+├── docs/                             # 📚 프로젝트 분석 문서
+│   ├── 01-component-structure-analysis.md
+│   ├── 02-code-quality-assessment.md
+│   ├── 03-code-documentation-guide.md
+│   ├── 04-function-call-hierarchy.md
+│   └── README.md
+├── tasks/                            # 📋 개선 작업 태스크
+│   ├── priority-1/                   # 🔥 즉시 적용 (1-3일)
+│   ├── priority-2/                   # ⭐ 중기 개선 (1-2주)
+│   ├── priority-3/                   # 📊 장기 개선 (1개월)
+│   └── README.md
+├── src/
+│   ├── components/
+│   │   ├── ui/                       # 공통 UI 컴포넌트 (글래스모피즘 스타일)
+│   │   │   ├── Button.tsx            # 네온 글로우 버튼
+│   │   │   ├── Card.tsx              # 글래스 카드
+│   │   │   ├── Input.tsx             # 글래스 입력 필드
+│   │   │   ├── Textarea.tsx          # 글래스 텍스트 영역
+│   │   │   ├── Badge.tsx             # 상태 배지
+│   │   │   ├── Progress.tsx          # 네온 진행률 바
+│   │   │   ├── Spinner.tsx           # 로딩 스피너
+│   │   │   └── index.ts              # 컴포넌트 exports
+│   │   ├── wizard/                   # Wizard 전용 컴포넌트
+│   │   │   ├── QuestionForm.tsx      # 질문 폼
+│   │   │   ├── FinancialSimulation.tsx  # 재무 시뮬레이션
+│   │   │   └── PMFSurvey.tsx         # PMF 설문
+│   │   ├── Layout.tsx                # 메인 레이아웃 (다크 테마)
+│   │   └── SaveIndicator.tsx         # 저장 상태 표시
+│   ├── pages/
+│   │   ├── ProjectCreate.tsx         # 프로젝트 생성 (메인 페이지)
+│   │   ├── WizardStep.tsx            # Wizard 단계별 페이지
+│   │   └── BusinessPlanViewer.tsx    # 사업계획서 뷰어
+│   ├── stores/
+│   │   ├── useProjectStore.ts        # 프로젝트 상태 관리
+│   │   ├── useWizardStore.ts         # Wizard 상태 관리
+│   │   ├── useFinancialStore.ts      # 재무 상태 관리
+│   │   └── usePMFStore.ts            # PMF 진단 상태 관리
+│   ├── hooks/
+│   │   ├── useAutoSave.ts            # Auto-save 커스텀 훅
+│   │   ├── useFinancialCalc.ts       # 재무 계산 커스텀 훅
+│   │   └── index.ts                  # 훅 exports
+│   ├── types/
+│   │   ├── index.ts                  # TypeScript 타입 정의
+│   │   └── mockData.ts               # Mock 데이터
+│   ├── lib/
+│   │   └── utils.ts                  # 유틸리티 함수 (cn)
+│   ├── App.tsx                       # 라우팅 설정
+│   ├── main.tsx                      # 앱 진입점
+│   └── index.css                     # 전역 스타일 (다크 테마)
+├── public/                           # 정적 파일
+├── index.html                        # HTML 엔트리
+├── package.json                      # 프로젝트 설정
+├── tailwind.config.js                # Tailwind 설정
+├── vite.config.ts                    # Vite 설정
+└── tsconfig.json                     # TypeScript 설정
 ```
 
 ---
@@ -238,6 +280,31 @@ src/
 
 ---
 
+## 📋 개선 로드맵
+
+### 🔥 Priority 1 - 즉시 적용 (1-3일)
+- React.memo를 주요 컴포넌트에 적용
+- useCallback을 이벤트 핸들러에 적용
+- useMemo를 계산 비용이 높은 값에 적용
+- 매직 넘버를 상수로 추출
+
+### ⭐ Priority 2 - 중기 개선 (1-2주)
+- 중복 코드 제거 및 공통 컴포넌트 추출
+- Error Boundary 및 에러 처리 로직 추가
+- Custom Hook 추가로 공통 로직 추출
+- 복잡한 컴포넌트 분리
+
+### 📊 Priority 3 - 장기 개선 (1개월)
+- 단위 테스트 및 통합 테스트 추가
+- Code Splitting 및 Lazy Loading 적용
+- 번들 크기 최적화
+- 접근성(A11y) 개선
+- Zustand Selector 패턴 적용
+
+> 상세 태스크는 [`tasks/`](./tasks/) 디렉토리에서 확인할 수 있습니다.
+
+---
+
 ## 🚧 향후 개선 사항
 
 - [ ] 실제 AI API 연동 (OpenAI, Anthropic, Google Gemini)
@@ -247,6 +314,27 @@ src/
 - [ ] 템플릿 커스터마이징
 - [ ] 다국어 지원 (영어, 일본어)
 - [ ] 모바일 앱 (React Native)
+
+---
+
+## 📚 문서
+
+| 문서 | 설명 |
+|------|------|
+| [컴포넌트 구조 분석](./docs/01-component-structure-analysis.md) | 컴포넌트 트리, 아키텍처 개요 |
+| [코드 품질 평가](./docs/02-code-quality-assessment.md) | 가독성, 재사용성, 성능 평가 |
+| [코드 문서화 가이드](./docs/03-code-documentation-guide.md) | 주석 작성 규칙, AI 프롬프팅 최적화 |
+| [함수 호출 구조](./docs/04-function-call-hierarchy.md) | 페이지별 호출 구조, 데이터 흐름 |
+
+---
+
+## 🤝 기여하기
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feat/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feat/amazing-feature`)
+5. Open a Pull Request
 
 ---
 
@@ -260,6 +348,6 @@ MIT License
 
 **Made with 💚 for early-stage entrepreneurs**
 
-[🌐 Live Demo](https://issue-automation.vercel.app) · [📝 Issues](https://github.com/voom20/Issue-Automation/issues) · [🔀 Pull Requests](https://github.com/voom20/Issue-Automation/pulls)
+[📝 Issues](https://github.com/voom20/bizplan_fe/issues) · [🔀 Pull Requests](https://github.com/voom20/bizplan_fe/pulls)
 
 </div>
