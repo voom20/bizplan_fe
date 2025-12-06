@@ -58,7 +58,7 @@ export const Layout: React.FC = () => {
                   <Sparkles className="w-4 h-4 text-slate-900" />
                 </div>
                 <span className="text-lg font-display font-bold text-white">
-                  StartupPlan
+                  BizPlan
                 </span>
               </Link>
               

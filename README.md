@@ -1,8 +1,8 @@
-# StartupPlan - AI 기반 사업계획서 작성 플랫폼
+# BizPlan - AI 기반 사업계획서 작성 플랫폼
 
 <div align="center">
 
-![StartupPlan](https://img.shields.io/badge/StartupPlan-AI%20Business%20Plan-22c55e?style=for-the-badge&logo=rocket&logoColor=white)
+![BizPlan](https://img.shields.io/badge/BizPlan-AI%20Business%20Plan-22c55e?style=for-the-badge&logo=rocket&logoColor=white)
 
 **초기 창업가를 위한 SaaS형 비즈니스 컨설팅 플랫폼**
 
@@ -87,8 +87,8 @@
 
 ```bash
 # 저장소 클론
-git clone https://github.com/voom20/Issue-Automation.git
-cd Issue-Automation
+git clone https://github.com/voom20/bizplan_fe.git
+cd bizplan_fe
 
 # 의존성 설치
 npm install
@@ -110,44 +110,51 @@ npm run preview
 ## 📁 프로젝트 구조
 
 ```
-src/
-├── components/
-│   ├── ui/                      # 공통 UI 컴포넌트 (글래스모피즘 스타일)
-│   │   ├── Button.tsx           # 네온 글로우 버튼
-│   │   ├── Card.tsx             # 글래스 카드
-│   │   ├── Input.tsx            # 글래스 입력 필드
-│   │   ├── Textarea.tsx         # 글래스 텍스트 영역
-│   │   ├── Badge.tsx            # 상태 배지
-│   │   ├── Progress.tsx         # 네온 진행률 바
-│   │   ├── Spinner.tsx          # 로딩 스피너
-│   │   └── index.ts             # 컴포넌트 exports
-│   ├── wizard/                  # Wizard 전용 컴포넌트
-│   │   ├── QuestionForm.tsx     # 질문 폼
-│   │   ├── FinancialSimulation.tsx  # 재무 시뮬레이션
-│   │   └── PMFSurvey.tsx        # PMF 설문
-│   ├── Layout.tsx               # 메인 레이아웃 (다크 테마)
-│   └── SaveIndicator.tsx        # 저장 상태 표시
-├── pages/
-│   ├── ProjectCreate.tsx        # 프로젝트 생성 (메인 페이지)
-│   ├── WizardStep.tsx           # Wizard 단계별 페이지
-│   └── BusinessPlanViewer.tsx   # 사업계획서 뷰어
-├── stores/
-│   ├── useProjectStore.ts       # 프로젝트 상태 관리
-│   ├── useWizardStore.ts        # Wizard 상태 관리
-│   ├── useFinancialStore.ts     # 재무 상태 관리
-│   └── usePMFStore.ts           # PMF 진단 상태 관리
-├── hooks/
-│   ├── useAutoSave.ts           # Auto-save 커스텀 훅
-│   ├── useFinancialCalc.ts      # 재무 계산 커스텀 훅
-│   └── index.ts                 # 훅 exports
-├── types/
-│   ├── index.ts                 # TypeScript 타입 정의
-│   └── mockData.ts              # Mock 데이터
-├── lib/
-│   └── utils.ts                 # 유틸리티 함수 (cn)
-├── App.tsx                      # 라우팅 설정
-├── main.tsx                     # 앱 진입점
-└── index.css                    # 전역 스타일 (다크 테마)
+bizplan_fe/
+├── src/
+│   ├── components/
+│   │   ├── ui/                      # 공통 UI 컴포넌트 (글래스모피즘 스타일)
+│   │   │   ├── Button.tsx           # 네온 글로우 버튼
+│   │   │   ├── Card.tsx             # 글래스 카드
+│   │   │   ├── Input.tsx            # 글래스 입력 필드
+│   │   │   ├── Textarea.tsx         # 글래스 텍스트 영역
+│   │   │   ├── Badge.tsx            # 상태 배지
+│   │   │   ├── Progress.tsx         # 네온 진행률 바
+│   │   │   ├── Spinner.tsx          # 로딩 스피너
+│   │   │   └── index.ts             # 컴포넌트 exports
+│   │   ├── wizard/                  # Wizard 전용 컴포넌트
+│   │   │   ├── QuestionForm.tsx     # 질문 폼
+│   │   │   ├── FinancialSimulation.tsx  # 재무 시뮬레이션
+│   │   │   └── PMFSurvey.tsx        # PMF 설문
+│   │   ├── Layout.tsx               # 메인 레이아웃 (다크 테마)
+│   │   └── SaveIndicator.tsx        # 저장 상태 표시
+│   ├── pages/
+│   │   ├── ProjectCreate.tsx        # 프로젝트 생성 (메인 페이지)
+│   │   ├── WizardStep.tsx           # Wizard 단계별 페이지
+│   │   └── BusinessPlanViewer.tsx   # 사업계획서 뷰어
+│   ├── stores/
+│   │   ├── useProjectStore.ts       # 프로젝트 상태 관리
+│   │   ├── useWizardStore.ts        # Wizard 상태 관리
+│   │   ├── useFinancialStore.ts     # 재무 상태 관리
+│   │   └── usePMFStore.ts           # PMF 진단 상태 관리
+│   ├── hooks/
+│   │   ├── useAutoSave.ts           # Auto-save 커스텀 훅
+│   │   ├── useFinancialCalc.ts      # 재무 계산 커스텀 훅
+│   │   └── index.ts                 # 훅 exports
+│   ├── types/
+│   │   ├── index.ts                 # TypeScript 타입 정의
+│   │   └── mockData.ts              # Mock 데이터
+│   ├── lib/
+│   │   └── utils.ts                 # 유틸리티 함수 (cn)
+│   ├── App.tsx                      # 라우팅 설정
+│   ├── main.tsx                     # 앱 진입점
+│   └── index.css                    # 전역 스타일 (다크 테마)
+├── public/                          # 정적 파일
+├── index.html                       # HTML 엔트리
+├── package.json                     # 프로젝트 설정
+├── tailwind.config.js               # Tailwind 설정
+├── vite.config.ts                   # Vite 설정
+└── tsconfig.json                    # TypeScript 설정
 ```
 
 ---
@@ -250,6 +257,16 @@ src/
 
 ---
 
+## 🤝 기여하기
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feat/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feat/amazing-feature`)
+5. Open a Pull Request
+
+---
+
 ## 📄 라이선스
 
 MIT License
@@ -260,6 +277,6 @@ MIT License
 
 **Made with 💚 for early-stage entrepreneurs**
 
-[🌐 Live Demo](https://issue-automation.vercel.app) · [📝 Issues](https://github.com/voom20/Issue-Automation/issues) · [🔀 Pull Requests](https://github.com/voom20/Issue-Automation/pulls)
+[📝 Issues](https://github.com/voom20/bizplan_fe/issues) · [🔀 Pull Requests](https://github.com/voom20/bizplan_fe/pulls)
 
 </div>
