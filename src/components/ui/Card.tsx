@@ -3,27 +3,9 @@
  * 
  * 파일 용도:
  * 재사용 가능한 카드 컴포넌트 및 관련 하위 컴포넌트
- * - Compound Component 패턴으로 구성
- * - 카드 구조: Card > CardHeader > CardTitle/CardDescription + CardContent + CardFooter
- * - 호버 효과 및 클릭 이벤트 지원
- * 
- * 컴포넌트 목록:
- * - Card: 메인 컨테이너
- * - CardHeader: 헤더 영역 (상단 구분선)
- * - CardTitle: 제목
- * - CardDescription: 설명
- * - CardContent: 본문
- * - CardFooter: 푸터 영역 (하단 구분선)
- * 
- * 사용 예시:
- * <Card hover onClick={handleClick}>
- *   <CardHeader>
- *     <CardTitle>제목</CardTitle>
- *     <CardDescription>설명</CardDescription>
- *   </CardHeader>
- *   <CardContent>내용</CardContent>
- *   <CardFooter>액션 버튼</CardFooter>
- * </Card>
+ * - 글래스모피즘 스타일
+ * - 다크 테마 최적화
+ * - Compound Component 패턴
  */
 
 import React from 'react';
@@ -36,31 +18,44 @@ interface CardProps {
   className?: string;
   /** 클릭 이벤트 핸들러 */
   onClick?: () => void;
-  /** 호버 시 그림자 효과 활성화 */
+  /** 호버 시 효과 활성화 */
   hover?: boolean;
+  /** 글로우 색상 */
+  glow?: 'neon' | 'cyan' | 'violet' | 'none';
 }
 
 /**
  * Card 컴포넌트 (메인 컨테이너)
- * 
- * 역할:
- * - 콘텐츠를 카드 형태로 감싸는 컨테이너
- * - 선택적으로 클릭 및 호버 효과 제공
- * 
- * @param {CardProps} props - 카드 속성
- * @returns {JSX.Element} 카드 컨테이너
+ * 글래스모피즘 스타일의 카드
  */
 export const Card: React.FC<CardProps> = ({ 
   children, 
   className, 
   onClick,
-  hover = false 
+  hover = false,
+  glow = 'none'
 }) => {
+  const glowStyles = {
+    neon: 'hover:shadow-neon hover:border-neon-500/30',
+    cyan: 'hover:shadow-cyan hover:border-cyan-500/30',
+    violet: 'hover:shadow-violet hover:border-violet-500/30',
+    none: ''
+  };
+
   return (
     <div
       className={cn(
-        'bg-white rounded-lg border border-gray-200 shadow-sm',
-        hover && 'hover:shadow-md transition-shadow cursor-pointer',
+        // 기본 글래스모피즘 스타일
+        'bg-white/5 backdrop-blur-xl rounded-2xl',
+        'border border-white/10',
+        'shadow-glass',
+        // 호버 효과
+        hover && [
+          'transition-all duration-300 cursor-pointer',
+          'hover:bg-white/10 hover:border-white/20',
+          'hover:-translate-y-1',
+          glowStyles[glow]
+        ],
         onClick && 'cursor-pointer',
         className
       )}
@@ -78,11 +73,11 @@ interface CardHeaderProps {
 
 /**
  * CardHeader 컴포넌트
- * - 카드의 헤더 영역 (하단 구분선 포함)
+ * - 카드의 헤더 영역
  */
 export const CardHeader: React.FC<CardHeaderProps> = ({ children, className }) => {
   return (
-    <div className={cn('px-6 py-4 border-b border-gray-200', className)}>
+    <div className={cn('px-6 py-5 border-b border-white/10', className)}>
       {children}
     </div>
   );
@@ -99,7 +94,7 @@ interface CardTitleProps {
  */
 export const CardTitle: React.FC<CardTitleProps> = ({ children, className }) => {
   return (
-    <h3 className={cn('text-lg font-semibold text-gray-900', className)}>
+    <h3 className={cn('text-lg font-semibold text-white', className)}>
       {children}
     </h3>
   );
@@ -112,11 +107,11 @@ interface CardDescriptionProps {
 
 /**
  * CardDescription 컴포넌트
- * - 카드의 설명 텍스트 (제목 하단)
+ * - 카드의 설명 텍스트
  */
 export const CardDescription: React.FC<CardDescriptionProps> = ({ children, className }) => {
   return (
-    <p className={cn('mt-1 text-sm text-gray-500', className)}>
+    <p className={cn('mt-1.5 text-sm text-slate-400', className)}>
       {children}
     </p>
   );
@@ -133,7 +128,7 @@ interface CardContentProps {
  */
 export const CardContent: React.FC<CardContentProps> = ({ children, className }) => {
   return (
-    <div className={cn('px-6 py-4', className)}>
+    <div className={cn('px-6 py-5', className)}>
       {children}
     </div>
   );
@@ -146,13 +141,12 @@ interface CardFooterProps {
 
 /**
  * CardFooter 컴포넌트
- * - 카드의 푸터 영역 (상단 구분선, 회색 배경)
+ * - 카드의 푸터 영역
  */
 export const CardFooter: React.FC<CardFooterProps> = ({ children, className }) => {
   return (
-    <div className={cn('px-6 py-4 border-t border-gray-200 bg-gray-50', className)}>
+    <div className={cn('px-6 py-4 border-t border-white/10 bg-white/5 rounded-b-2xl', className)}>
       {children}
     </div>
   );
 };
-
