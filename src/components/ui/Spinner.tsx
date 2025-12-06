@@ -2,46 +2,46 @@
  * 파일명: Spinner.tsx
  * 
  * 파일 용도:
- * 재사용 가능한 로딩 스피너 컴포넌트
- * - 로딩 중임을 나타내는 회전 애니메이션
- * - 3가지 크기 옵션 (sm, md, lg)
- * - SVG 기반으로 선명한 표시
- * 
- * 사용 예시:
- * <Spinner size="lg" />
- * <Spinner size="sm" className="text-white" />
+ * 로딩 스피너 컴포넌트
+ * - 네온 스타일
  */
 
 import React from 'react';
 import { cn } from '../../lib/utils';
 
 interface SpinnerProps {
-  /** 스피너 크기 */
+  /** 크기 */
   size?: 'sm' | 'md' | 'lg';
   /** 추가 CSS 클래스 */
   className?: string;
+  /** 색상 */
+  color?: 'neon' | 'cyan' | 'violet' | 'white';
 }
 
 /**
  * Spinner 컴포넌트
- * 
- * 역할:
- * - 데이터 로딩, 처리 중 상태 표시
- * - 부드러운 회전 애니메이션
- * 
- * @param {SpinnerProps} props - 스피너 속성
- * @returns {JSX.Element} 로딩 스피너
  */
-export const Spinner: React.FC<SpinnerProps> = ({ size = 'md', className }) => {
+export const Spinner: React.FC<SpinnerProps> = ({
+  size = 'md',
+  className,
+  color = 'neon'
+}) => {
   const sizes = {
-    sm: 'h-4 w-4',
-    md: 'h-8 w-8',
-    lg: 'h-12 w-12',
+    sm: 'w-4 h-4',
+    md: 'w-8 h-8',
+    lg: 'w-12 h-12',
+  };
+
+  const colors = {
+    neon: 'text-neon-500',
+    cyan: 'text-cyan-500',
+    violet: 'text-violet-500',
+    white: 'text-white',
   };
 
   return (
     <svg
-      className={cn('animate-spin text-primary-600', sizes[size], className)}
+      className={cn('animate-spin', sizes[size], colors[color], className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -62,4 +62,3 @@ export const Spinner: React.FC<SpinnerProps> = ({ size = 'md', className }) => {
     </svg>
   );
 };
-

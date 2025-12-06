@@ -2,15 +2,9 @@
  * 파일명: Badge.tsx
  * 
  * 파일 용도:
- * 재사용 가능한 배지(Badge) 컴포넌트
- * - 상태, 태그, 레이블 등을 표시하는 작은 UI 요소
- * - 5가지 variant 제공 (default, success, warning, danger, info)
- * - 작고 둥근 알약 형태
- * 
- * 사용 예시:
- * <Badge variant="success">완료</Badge>
- * <Badge variant="danger">긴급</Badge>
- * <Badge variant="info">새로운</Badge>
+ * 재사용 가능한 배지/태그 컴포넌트
+ * - 다양한 색상 옵션
+ * - 다크 테마 최적화
  */
 
 import React from 'react';
@@ -19,39 +13,35 @@ import { cn } from '../../lib/utils';
 interface BadgeProps {
   /** 배지 내용 */
   children: React.ReactNode;
-  /** 배지 스타일 변형 */
-  variant?: 'default' | 'success' | 'warning' | 'danger' | 'info';
+  /** 배지 색상 */
+  variant?: 'neon' | 'cyan' | 'violet' | 'slate' | 'success' | 'warning' | 'danger';
   /** 추가 CSS 클래스 */
   className?: string;
 }
 
 /**
  * Badge 컴포넌트
- * 
- * 역할:
- * - 상태, 카테고리, 태그 등을 시각적으로 표시
- * - 색상으로 의미 전달 (성공=초록, 경고=노랑, 위험=빨강 등)
- * 
- * @param {BadgeProps} props - 배지 속성
- * @returns {JSX.Element} 배지 엘리먼트
  */
-export const Badge: React.FC<BadgeProps> = ({ 
-  children, 
-  variant = 'default',
-  className 
+export const Badge: React.FC<BadgeProps> = ({
+  children,
+  variant = 'slate',
+  className
 }) => {
   const variants = {
-    default: 'bg-gray-100 text-gray-800',
-    success: 'bg-green-100 text-green-800',
-    warning: 'bg-yellow-100 text-yellow-800',
-    danger: 'bg-red-100 text-red-800',
-    info: 'bg-blue-100 text-blue-800',
+    neon: 'bg-neon-500/20 text-neon-400 border-neon-500/30',
+    cyan: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+    violet: 'bg-violet-500/20 text-violet-400 border-violet-500/30',
+    slate: 'bg-slate-500/20 text-slate-400 border-slate-500/30',
+    success: 'bg-green-500/20 text-green-400 border-green-500/30',
+    warning: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+    danger: 'bg-red-500/20 text-red-400 border-red-500/30',
   };
 
   return (
     <span
       className={cn(
         'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
+        'border backdrop-blur-sm',
         variants[variant],
         className
       )}
@@ -60,4 +50,3 @@ export const Badge: React.FC<BadgeProps> = ({
     </span>
   );
 };
-
