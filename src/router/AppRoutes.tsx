@@ -58,6 +58,9 @@ const ServerErrorPage = lazy(() => import('../pages/ServerErrorPage'));
 /** 404 페이지 */
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
 
+/** 프로필 페이지 */
+const ProfilePage = lazy(() => import('../pages/ProfilePage'));
+
 /**
  * SuspenseWrapper 컴포넌트
  * 
@@ -110,6 +113,16 @@ export const AppRoutes: React.FC = () => {
         element={
           <SuspenseWrapper>
             <SignupPage />
+          </SuspenseWrapper>
+        }
+      />
+
+      {/* 프로필 페이지 (인증된 사용자용, 레이아웃 없음) */}
+      <Route
+        path="/profile"
+        element={
+          <SuspenseWrapper>
+            <ProfilePage />
           </SuspenseWrapper>
         }
       />
