@@ -327,3 +327,5 @@ export const ProjectCreate: React.FC = () => {
     </div>
   );
 };
+
+export default ProjectCreate;

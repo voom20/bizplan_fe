@@ -231,3 +231,5 @@ export const BusinessPlanViewer: React.FC = () => {
   );
 };
 
+export default BusinessPlanViewer;
+
