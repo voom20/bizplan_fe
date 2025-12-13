@@ -174,3 +174,5 @@ export const WizardStep: React.FC = () => {
   );
 };
 
+export default WizardStep;
+
