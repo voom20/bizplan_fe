@@ -101,27 +101,27 @@ export const LoginPage: React.FC = () => {
       <div className="floating-orb w-80 h-80 bg-cyan-500/20 top-1/3 -right-40" style={{ animationDelay: '2s' }} />
       <div className="floating-orb w-64 h-64 bg-violet-500/20 bottom-20 left-1/4" style={{ animationDelay: '4s' }} />
 
-      <div className="relative z-10 w-full max-w-md">
-        {/* 로고 */}
-        <div className="text-center mb-8 animate-fade-in">
-          <Link to="/" className="inline-flex items-center justify-center mb-4">
+      <div className="relative z-10 w-full max-w-md px-4 sm:px-0">
+        {/* 로고 - 반응형 */}
+        <div className="text-center mb-6 sm:mb-8 animate-fade-in">
+          <Link to="/" className="inline-flex items-center justify-center mb-3 sm:mb-4">
             <div className="relative">
               <div className="absolute inset-0 bg-neon-500 blur-2xl opacity-40 animate-pulse-slow" />
-              <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-neon-400 to-neon-600 flex items-center justify-center shadow-neon-lg">
-                <Sparkles className="w-8 h-8 text-slate-900" />
+              <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-neon-400 to-neon-600 flex items-center justify-center shadow-neon-lg">
+                <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-slate-900" />
               </div>
             </div>
           </Link>
-          <h1 className="text-3xl font-display font-bold text-white mb-2">
+          <h1 className="text-2xl sm:text-3xl font-display font-bold text-white mb-2">
             로그인
           </h1>
-          <p className="text-slate-400">
+          <p className="text-sm sm:text-base text-slate-400 px-2">
             계정에 로그인하여 사업계획서를 작성하세요.
           </p>
         </div>
 
-        {/* 로그인 폼 */}
-        <div className="glass-card p-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+        {/* 로그인 폼 - 반응형 패딩 */}
+        <div className="glass-card p-5 sm:p-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* 이메일 */}
             <div>

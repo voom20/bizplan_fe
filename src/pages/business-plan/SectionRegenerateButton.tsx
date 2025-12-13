@@ -87,10 +87,10 @@ export const SectionRegenerateButton: React.FC<SectionRegenerateButtonProps> = (
     error: '실패',
   }[status];
 
-  // 크기별 스타일
+  // 크기별 스타일 - 반응형
   const sizeStyles = {
-    sm: 'px-3 py-1.5 text-xs gap-1.5',
-    md: 'px-4 py-2 text-sm gap-2',
+    sm: 'px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm gap-1.5',
+    md: 'px-3 sm:px-4 py-2 sm:py-2.5 text-sm gap-2',
   };
 
   // 변형별 스타일

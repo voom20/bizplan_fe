@@ -79,7 +79,7 @@ export const WizardStep: React.FC = () => {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">단계를 찾을 수 없습니다</h2>
+          <h2 className="text-2xl font-bold text-white mb-2">단계를 찾을 수 없습니다</h2>
           <Button onClick={() => navigate('/wizard/1')}>첫 단계로 이동</Button>
         </div>
       </div>
@@ -118,23 +118,23 @@ export const WizardStep: React.FC = () => {
   const canProceed = stepNumber === steps.length || isCompleted || stepNumber === 4 || stepNumber === 5;
 
   return (
-    <div className="max-w-3xl mx-auto">
-      {/* Step Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-2">
-          <span className="text-4xl">{step.icon}</span>
+    <div className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
+      {/* Step Header - 반응형 */}
+      <div className="mb-4 sm:mb-6 lg:mb-8">
+        <div className="flex items-center gap-2 sm:gap-3 mb-2">
+          <span className="text-2xl sm:text-3xl lg:text-4xl">{step.icon}</span>
           <div>
-            <div className="text-sm text-gray-500 font-medium">
+            <div className="text-xs sm:text-sm text-slate-400 font-medium">
               Step {step.id} / {steps.length}
             </div>
-            <h1 className="text-3xl font-bold text-gray-900">{step.title}</h1>
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">{step.title}</h1>
           </div>
         </div>
-        <p className="text-gray-600 mt-2">{step.description}</p>
+        <p className="text-sm sm:text-base text-slate-300 mt-2">{step.description}</p>
       </div>
 
-      {/* Step Content */}
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8 mb-6">
+      {/* Step Content - 반응형 패딩 */}
+      <div className="glass-card p-4 sm:p-6 lg:p-8 mb-4 sm:mb-6">
         {stepNumber === 4 ? (
           <FinancialSimulation />
         ) : stepNumber === 5 ? (
@@ -144,29 +144,31 @@ export const WizardStep: React.FC = () => {
         )}
       </div>
 
-      {/* Navigation */}
-      <div className="flex items-center justify-between">
+      {/* Navigation - 반응형 */}
+      <div className="flex items-center justify-between gap-2">
         <Button
           variant="ghost"
           onClick={handlePrevious}
           disabled={stepNumber === 1}
+          className="text-sm sm:text-base"
         >
           <ChevronLeft className="w-4 h-4 mr-1" />
-          이전
+          <span className="hidden sm:inline">이전</span>
         </Button>
 
         <Button
           onClick={handleNext}
           disabled={!canProceed}
+          className="text-sm sm:text-base"
         >
-          {stepNumber === steps.length ? '사업계획서 생성' : '다음'}
+          {stepNumber === steps.length ? '사업계획서 생성' : <><span className="hidden sm:inline">다음</span><span className="sm:hidden">다음</span></>}
           {stepNumber < steps.length && <ChevronRight className="w-4 h-4 ml-1" />}
         </Button>
       </div>
 
-      {/* Help Text */}
+      {/* Help Text - 반응형 */}
       {!isCompleted && stepNumber !== 4 && stepNumber !== 5 && (
-        <div className="mt-4 text-center text-sm text-gray-500">
+        <div className="mt-3 sm:mt-4 text-center text-xs sm:text-sm text-slate-400 px-2">
           필수 항목(*)을 모두 입력하면 다음 단계로 진행할 수 있습니다.
         </div>
       )}
