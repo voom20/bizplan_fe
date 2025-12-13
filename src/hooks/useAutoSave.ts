@@ -31,7 +31,7 @@
  */
 
 import { useEffect, useRef } from 'react';
-import { useProjectStore } from '../stores/useProjectStore';
+import { useProjectStore } from '@/stores/useProjectStore';
 import { debounce } from '../lib/utils';
 
 /**

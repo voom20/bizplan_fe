@@ -14,11 +14,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { User, Shield, Trash2, ArrowLeft, Sparkles } from 'lucide-react';
-import { useAuthStore } from '../../stores/useAuthStore';
-import { ProfileEditForm } from './ProfileEditForm';
-import { ChangePasswordForm } from './ChangePasswordForm';
-import { DeleteAccountModal } from './DeleteAccountModal';
-import { cn } from '../../lib/utils';
+import { useAuthStore } from '@/stores/useAuthStore';
+import { ProfileEditForm } from '@/pages/profile/ProfileEditForm';
+import { ChangePasswordForm } from '@/pages/profile/ChangePasswordForm';
+import { DeleteAccountModal } from '@/pages/profile/DeleteAccountModal';
+import { cn } from '@/lib/utils';
 
 /** 탭 타입 */
 type TabType = 'profile' | 'security';

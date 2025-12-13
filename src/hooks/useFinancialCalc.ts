@@ -25,7 +25,7 @@
  */
 
 import { useEffect } from 'react';
-import { useFinancialStore } from '../stores/useFinancialStore';
+import { useFinancialStore } from '@/stores/useFinancialStore';
 
 /**
  * useFinancialCalc Hook

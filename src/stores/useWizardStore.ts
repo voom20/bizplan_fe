@@ -37,7 +37,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { WizardData, WizardStep } from '../types';
+import { WizardData, WizardStep } from '@/types';
 import { wizardSteps } from '../types/mockData';
 
 interface WizardState {

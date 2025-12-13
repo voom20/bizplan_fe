@@ -15,10 +15,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { User, Mail, Calendar, Save, Loader2 } from 'lucide-react';
-import { useAuthStore } from '../../stores/useAuthStore';
-import { useToast } from '../../components/Toast';
-import { Input } from '../../components/ui/Input';
-import { cn } from '../../lib/utils';
+import { useAuthStore } from '@/stores/useAuthStore';
+import { useToast } from '@/components/Toast';
+import { Input } from '@/components/ui/Input';
+import { cn } from '@/lib/utils';
 
 // 프로필 수정 스키마
 const profileSchema = z.object({

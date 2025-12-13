@@ -20,8 +20,8 @@
 
 import React from 'react';
 import { AlertTriangle, Info } from 'lucide-react';
-import { Modal } from './Modal';
-import { cn } from '../../lib/utils';
+import { Modal } from '@/components/Modal/Modal';
+import { cn } from '@/lib/utils';
 
 export interface ConfirmModalProps {
   isOpen: boolean;

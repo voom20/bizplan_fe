@@ -30,10 +30,10 @@
  */
 
 import React from 'react';
-import { useWizardStore } from '../../stores/useWizardStore';
-import { useAutoSave } from '../../hooks/useAutoSave';
-import { Question } from '../../types';
-import { Input, Textarea } from '../../components/ui';
+import { useWizardStore } from '@/stores/useWizardStore';
+import { useAutoSave } from '@/hooks/useAutoSave';
+import { Question } from '@/types';
+import { Input, Textarea } from '@/components/ui';
 
 interface QuestionFormProps {
   /** 렌더링할 질문 목록 */

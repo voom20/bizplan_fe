@@ -12,8 +12,8 @@
 
 import React from 'react';
 import { DollarSign, TrendingUp, Target, AlertCircle, CheckCircle2 } from 'lucide-react';
-import { Badge } from '../ui';
-import { formatCurrency, formatNumber } from '../../lib/utils';
+import { Badge } from '@/components/ui';
+import { formatCurrency, formatNumber } from '@/lib/utils';
 import { cn } from '../../lib/utils';
 
 export interface FinancialMetricsData {

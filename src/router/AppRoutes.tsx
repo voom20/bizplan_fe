@@ -30,39 +30,39 @@
 
 import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Layout } from '../components/Layout';
-import { PageLoadingFallback } from '../components/PageLoadingFallback';
+import { Layout } from '@/components/Layout';
+import { PageLoadingFallback } from '@/components/PageLoadingFallback';
 
 // ============================================
 // Lazy Loading 페이지 컴포넌트
 // ============================================
 
 /** 프로젝트 생성 페이지 (메인) */
-const ProjectCreate = lazy(() => import('../pages/ProjectCreate'));
+const ProjectCreate = lazy(() => import('@/pages/ProjectCreate'));
 
 /** 로그인 페이지 */
-const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
+const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
 
 /** 회원가입 페이지 */
-const SignupPage = lazy(() => import('../pages/auth/SignupPage'));
+const SignupPage = lazy(() => import('@/pages/auth/SignupPage'));
 
 /** 마법사 단계 페이지 */
-const WizardStep = lazy(() => import('../pages/wizard/WizardStep'));
+const WizardStep = lazy(() => import('@/pages/wizard/WizardStep'));
 
 /** 사업계획서 뷰어 페이지 */
-const BusinessPlanViewer = lazy(() => import('../pages/business-plan/BusinessPlanViewer'));
+const BusinessPlanViewer = lazy(() => import('@/pages/business-plan/BusinessPlanViewer'));
 
 /** 서버 에러 페이지 */
-const ServerErrorPage = lazy(() => import('../pages/ServerErrorPage'));
+const ServerErrorPage = lazy(() => import('@/pages/ServerErrorPage'));
 
 /** 404 페이지 */
-const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
+const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
 /** 프로필 페이지 */
-const ProfilePage = lazy(() => import('../pages/profile/ProfilePage'));
+const ProfilePage = lazy(() => import('@/pages/profile/ProfilePage'));
 
 /** 재무 계산기 페이지 (Public) */
-const FinancialCalculatorPage = lazy(() => import('../pages/calculator/FinancialCalculatorPage'));
+const FinancialCalculatorPage = lazy(() => import('@/pages/calculator/FinancialCalculatorPage'));
 
 /**
  * SuspenseWrapper 컴포넌트

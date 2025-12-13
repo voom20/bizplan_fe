@@ -11,7 +11,7 @@
 
 import React, { useEffect, useCallback, ReactNode } from 'react';
 import { X } from 'lucide-react';
-import { cn } from '../../lib/utils';
+import { cn } from '@/lib/utils';
 
 /**
  * 열린 모달 개수를 추적하여 body 스크롤을 관리

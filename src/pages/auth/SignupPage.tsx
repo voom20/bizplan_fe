@@ -16,9 +16,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { UserPlus, Mail, Lock, Eye, EyeOff, User, Sparkles, Check } from 'lucide-react';
-import { useAuthStore } from '../../stores/useAuthStore';
-import { useToast } from '../../components/Toast';
-import { cn } from '../../lib/utils';
+import { useAuthStore } from '@/stores/useAuthStore';
+import { useToast } from '@/components/Toast';
+import { cn } from '@/lib/utils';
 
 // 폼 스키마
 const signupSchema = z.object({

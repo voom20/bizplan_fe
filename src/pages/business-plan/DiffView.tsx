@@ -20,9 +20,9 @@ import {
   Columns,
   AlignJustify
 } from 'lucide-react';
-import { Button, Badge } from '../../components/ui';
-import { DocumentVersion } from './VersionListItem';
-import { cn } from '../../lib/utils';
+import { Button, Badge } from '@/components/ui';
+import { DocumentVersion } from '@/pages/business-plan/VersionListItem';
+import { cn } from '@/lib/utils';
 
 /** 비교할 섹션 데이터 */
 interface SectionContent {

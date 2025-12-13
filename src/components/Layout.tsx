@@ -10,12 +10,12 @@
 
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { useWizardStore } from '../stores/useWizardStore';
-import { useProjectStore } from '../stores/useProjectStore';
-import { SaveIndicator } from './SaveIndicator';
-import { Progress } from './ui';
+import { useWizardStore } from '@/stores/useWizardStore';
+import { useProjectStore } from '@/stores/useProjectStore';
+import { SaveIndicator } from '@/components/SaveIndicator';
+import { Progress } from '@/components/ui';
 import { Check, Sparkles, ChevronRight } from 'lucide-react';
-import { cn } from '../lib/utils';
+import { cn } from '@/lib/utils';
 
 /**
  * Layout 컴포넌트
