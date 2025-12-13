@@ -24,12 +24,16 @@
  * - mockBusinessPlan: 사업계획서 섹션 목록
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Button, Spinner, Badge } from '../components/ui';
 import { ExportDropdown } from '../components/ExportDropdown';
+import { VersionHistoryPanel } from '../components/VersionHistoryPanel';
+import { DiffView } from '../components/DiffView';
+import { SectionRegenerateButton } from '../components/SectionRegenerateButton';
+import { DocumentVersion } from '../components/VersionListItem';
 import { mockBusinessPlan } from '../types/mockData';
 import ReactMarkdown from 'react-markdown';
-import { Sparkles, RefreshCw, FileText, Calendar, Clock } from 'lucide-react';
+import { Sparkles, FileText, Calendar, Clock, History } from 'lucide-react';
 
 /**
  * BusinessPlanViewer 컴포넌트
@@ -57,8 +61,18 @@ export const BusinessPlanViewer: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isGenerated, setIsGenerated] = useState(false);
   const [sections, setSections] = useState(mockBusinessPlan);
-  const [regeneratingSection, setRegeneratingSection] = useState<string | null>(null);
-  const [version] = useState(1);
+  const [currentVersion, setCurrentVersion] = useState(1);
+  
+  // 버전 히스토리 상태
+  const [isVersionPanelOpen, setIsVersionPanelOpen] = useState(false);
+  const [versions, setVersions] = useState<DocumentVersion[]>([]);
+  const [selectedVersion, setSelectedVersion] = useState<DocumentVersion | null>(null);
+  
+  // 버전 비교 상태
+  const [compareVersions, setCompareVersions] = useState<{
+    old: DocumentVersion;
+    new: DocumentVersion;
+  } | null>(null);
 
   /**
    * AI 사업계획서 생성 시뮬레이션
@@ -72,31 +86,94 @@ export const BusinessPlanViewer: React.FC = () => {
     setTimeout(() => {
       setIsGenerating(false);
       setIsGenerated(true);
+      
+      // 첫 번째 버전 생성
+      const firstVersion: DocumentVersion = {
+        id: 'v1',
+        version: 1,
+        createdAt: new Date().toISOString(),
+        status: 'COMPLETED',
+        summary: 'AI 사업계획서 최초 생성',
+        changedSections: sections.length,
+      };
+      setVersions([firstVersion]);
+      setSelectedVersion(firstVersion);
+      setCurrentVersion(1);
     }, 3000);
   };
 
   /**
-   * 특정 섹션 재생성
+   * 특정 섹션 재생성 (새 버전 생성)
    * 
    * @param {string} sectionId - 재생성할 섹션의 ID
    */
-  const handleRegenerate = (sectionId: string) => {
-    setRegeneratingSection(sectionId);
-    
+  const handleRegenerate = useCallback(async (sectionId: string): Promise<void> => {
     // Simulate regeneration
-    setTimeout(() => {
-      setSections(sections.map(section => {
-        if (section.id === sectionId) {
-          return {
-            ...section,
-            content: section.content + '\n\n[AI가 새로운 내용을 생성했습니다]',
-          };
-        }
-        return section;
-      }));
-      setRegeneratingSection(null);
-    }, 2000);
-  };
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // 섹션 내용 업데이트
+    setSections(prev => prev.map(section => {
+      if (section.id === sectionId) {
+        return {
+          ...section,
+          content: section.content + '\n\n[AI가 새로운 내용을 생성했습니다]',
+        };
+      }
+      return section;
+    }));
+    
+    // 새 버전 생성
+    const newVersionNumber = currentVersion + 1;
+    const sectionName = sections.find(s => s.id === sectionId)?.title || '섹션';
+    const newVersion: DocumentVersion = {
+      id: `v${newVersionNumber}`,
+      version: newVersionNumber,
+      createdAt: new Date().toISOString(),
+      status: 'COMPLETED',
+      summary: `${sectionName} 섹션 재생성`,
+      changedSections: 1,
+    };
+    
+    setVersions(prev => [...prev, newVersion]);
+    setSelectedVersion(newVersion);
+    setCurrentVersion(newVersionNumber);
+  }, [currentVersion, sections]);
+
+  /**
+   * 버전 선택 핸들러
+   */
+  const handleVersionSelect = useCallback((version: DocumentVersion) => {
+    setSelectedVersion(version);
+    // 실제로는 해당 버전의 데이터를 API에서 가져와야 함
+    // 현재는 Mock이므로 그대로 유지
+  }, []);
+
+  /**
+   * 새 버전 생성 핸들러
+   */
+  const handleCreateNewVersion = useCallback(() => {
+    const newVersionNumber = currentVersion + 1;
+    const newVersion: DocumentVersion = {
+      id: `v${newVersionNumber}`,
+      version: newVersionNumber,
+      createdAt: new Date().toISOString(),
+      status: 'DRAFT',
+      summary: '수동 버전 생성',
+    };
+    
+    setVersions(prev => [...prev, newVersion]);
+    setSelectedVersion(newVersion);
+    setCurrentVersion(newVersionNumber);
+  }, [currentVersion]);
+
+  /**
+   * 버전 비교 핸들러
+   */
+  const handleCompareVersions = useCallback((v1: DocumentVersion, v2: DocumentVersion) => {
+    // 버전 번호 순서 정렬 (이전 버전이 먼저)
+    const [oldVer, newVer] = v1.version < v2.version ? [v1, v2] : [v2, v1];
+    setCompareVersions({ old: oldVer, new: newVer });
+  }, []);
 
   /**
    * 내보내기용 HTML 콘텐츠 생성
@@ -174,7 +251,7 @@ export const BusinessPlanViewer: React.FC = () => {
               </span>
               <span className="flex items-center gap-1.5">
                 <FileText className="w-4 h-4" />
-                버전 {version}
+                버전 {currentVersion}
               </span>
               <span className="flex items-center gap-1.5">
                 <Clock className="w-4 h-4" />
@@ -183,11 +260,21 @@ export const BusinessPlanViewer: React.FC = () => {
             </div>
           </div>
           
-          {/* 내보내기 드롭다운 */}
-          <ExportDropdown 
-            version={version} 
-            content={exportContent}
-          />
+          {/* 버전 히스토리 및 내보내기 */}
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsVersionPanelOpen(true)}
+            >
+              <History className="w-4 h-4 mr-1.5" />
+              버전 {versions.length}
+            </Button>
+            <ExportDropdown 
+              version={currentVersion} 
+              content={exportContent}
+            />
+          </div>
         </div>
       </div>
 
@@ -203,16 +290,11 @@ export const BusinessPlanViewer: React.FC = () => {
               <h2 className="text-xl font-bold text-white">
                 {section.title}
               </h2>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => handleRegenerate(section.id)}
-                disabled={regeneratingSection === section.id}
-                isLoading={regeneratingSection === section.id}
-              >
-                <RefreshCw className="w-4 h-4 mr-1" />
-                다시 쓰기
-              </Button>
+              <SectionRegenerateButton
+                sectionId={section.id}
+                sectionName={section.title}
+                onRegenerate={handleRegenerate}
+              />
             </div>
             <div className="px-6 py-6">
               <div className="prose prose-invert prose-sm max-w-none">
@@ -232,11 +314,33 @@ export const BusinessPlanViewer: React.FC = () => {
           돌아가기
         </Button>
         <ExportDropdown 
-          version={version} 
+          version={currentVersion} 
           content={exportContent}
           compact
         />
       </div>
+
+      {/* 버전 히스토리 패널 */}
+      <VersionHistoryPanel
+        isOpen={isVersionPanelOpen}
+        onClose={() => setIsVersionPanelOpen(false)}
+        versions={versions}
+        selectedVersion={selectedVersion}
+        onVersionSelect={handleVersionSelect}
+        onCreateNewVersion={handleCreateNewVersion}
+        onCompareVersions={handleCompareVersions}
+      />
+
+      {/* 버전 비교 뷰 */}
+      {compareVersions && (
+        <DiffView
+          oldVersion={compareVersions.old}
+          newVersion={compareVersions.new}
+          oldSections={sections.map(s => ({ id: s.id, title: s.title, content: s.content }))}
+          newSections={sections.map(s => ({ id: s.id, title: s.title, content: s.content }))}
+          onClose={() => setCompareVersions(null)}
+        />
+      )}
     </div>
   );
 };
