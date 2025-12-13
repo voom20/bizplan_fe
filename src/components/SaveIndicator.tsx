@@ -10,7 +10,7 @@
 import React from 'react';
 import { useProjectStore } from '@/stores/useProjectStore';
 import { Check, Cloud, CloudOff, AlertCircle, Loader2 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 
 /**
  * SaveIndicator 컴포넌트

@@ -13,8 +13,7 @@
 import React from 'react';
 import { DollarSign, TrendingUp, Target, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Badge } from '@/components/ui';
-import { formatCurrency, formatNumber } from '@/lib/utils';
-import { cn } from '../../lib/utils';
+import { formatCurrency, formatNumber, cn } from '@/common/utils';
 
 export interface FinancialMetricsData {
   revenue: number;

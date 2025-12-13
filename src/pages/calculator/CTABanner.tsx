@@ -14,7 +14,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles, ArrowRight, Lock, Zap, Shield, Save } from 'lucide-react';
 import { Button } from '@/components/ui';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 
 interface CTABannerProps {
   /** 배너 변형 */

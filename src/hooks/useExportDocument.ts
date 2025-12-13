@@ -20,7 +20,7 @@ import {
   downloadBlob, 
   generateExportFilename, 
   createMockDocument 
-} from '../lib/downloadFile';
+} from '@/common/downloadFile';
 
 /** 내보내기 상태 */
 interface ExportState {

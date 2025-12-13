@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 
 interface CardProps {
   /** 카드 내용 */

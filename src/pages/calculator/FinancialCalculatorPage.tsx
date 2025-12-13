@@ -25,7 +25,7 @@ import { PreviewFinancialForm, FinancialInput } from '@/pages/calculator/Preview
 import { CTABanner } from '@/pages/calculator/CTABanner';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { Button } from '@/components/ui';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 
 /**
  * FinancialCalculatorPage 컴포넌트

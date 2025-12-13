@@ -13,7 +13,7 @@
 import React from 'react';
 import { Check, Clock, FileText, Sparkles } from 'lucide-react';
 import { Badge } from '@/components/ui';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 
 /** 버전 상태 타입 */
 export type VersionStatus = 'DRAFT' | 'COMPLETED' | 'GENERATING';

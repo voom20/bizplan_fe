@@ -13,7 +13,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { Lock, Eye, EyeOff, Check } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 
 interface PasswordInputProps {
   /** 입력값 */

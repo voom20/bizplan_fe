@@ -11,7 +11,7 @@
 
 import React from 'react';
 import { X, CheckCircle, AlertCircle, AlertTriangle, Info } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 import type { ToastItem, ToastType } from './ToastContext';
 
 // 타입별 스타일 및 아이콘 설정

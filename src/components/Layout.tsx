@@ -15,7 +15,7 @@ import { useProjectStore } from '@/stores/useProjectStore';
 import { SaveIndicator } from '@/components/SaveIndicator';
 import { Progress } from '@/components/ui';
 import { Check, Sparkles, ChevronRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 
 /**
  * Layout 컴포넌트

@@ -23,8 +23,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { formatCurrency } from '@/lib/utils';
-import { cn } from '../../lib/utils';
+import { formatCurrency, cn } from '@/common/utils';
 
 export interface ChartDataPoint {
   month: number;

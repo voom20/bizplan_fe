@@ -18,7 +18,7 @@ import { z } from 'zod';
 import { UserPlus, Mail, Lock, Eye, EyeOff, User, Sparkles, Check } from 'lucide-react';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useToast } from '@/components/Toast';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 
 // 폼 스키마
 const signupSchema = z.object({

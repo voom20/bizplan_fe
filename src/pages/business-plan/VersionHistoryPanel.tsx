@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui';
 import { VersionListItem, DocumentVersion } from '@/pages/business-plan/VersionListItem';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 
 interface VersionHistoryPanelProps {
   /** 패널 열림 상태 */

@@ -13,7 +13,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import api, { setTokens, clearTokens } from '@/lib/axios';
+import api, { setTokens, clearTokens } from '@/common/axios';
 
 // 사용자 타입
 export interface User {

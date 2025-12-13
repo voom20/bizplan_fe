@@ -26,7 +26,7 @@ import {
   BarChart3,
   FileText
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 
 /**
  * ProjectCreate 컴포넌트

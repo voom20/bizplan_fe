@@ -18,7 +18,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import { ProfileEditForm } from '@/pages/profile/ProfileEditForm';
 import { ChangePasswordForm } from '@/pages/profile/ChangePasswordForm';
 import { DeleteAccountModal } from '@/pages/profile/DeleteAccountModal';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 
 /** 탭 타입 */
 type TabType = 'profile' | 'security';

@@ -14,7 +14,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 
 interface AuthFormLayoutProps {
   /** 페이지 타이틀 */

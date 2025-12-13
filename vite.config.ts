@@ -22,7 +22,7 @@ export default defineConfig({
       '@/pages': path.resolve(__dirname, './src/pages'),
       '@/hooks': path.resolve(__dirname, './src/hooks'),
       '@/stores': path.resolve(__dirname, './src/stores'),
-      '@/lib': path.resolve(__dirname, './src/lib'),
+      '@/common': path.resolve(__dirname, './src/common'),
       '@/types': path.resolve(__dirname, './src/types'),
     },
   },

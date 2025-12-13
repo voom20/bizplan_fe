@@ -41,8 +41,8 @@ import {
   Calculator
 } from 'lucide-react';
 import { Input, Badge } from '@/components/ui';
-import { formatCurrency, formatNumber, debounce } from '@/lib/utils';
-import { cn } from '@/lib/utils';
+import { formatCurrency, formatNumber, debounce } from '@/common/utils';
+import { cn } from '@/common/utils';
 
 /** 재무 입력 데이터 타입 */
 export interface FinancialInput {

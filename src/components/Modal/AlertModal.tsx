@@ -19,7 +19,7 @@
 import React from 'react';
 import { CheckCircle, AlertCircle, AlertTriangle, Info } from 'lucide-react';
 import { Modal } from '@/components/Modal/Modal';
-import { cn } from '@/lib/utils';
+import { cn } from '@/common/utils';
 
 export interface AlertModalProps {
   isOpen: boolean;
