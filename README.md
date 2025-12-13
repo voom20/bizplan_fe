@@ -10,6 +10,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-7.2-646CFF?style=flat-square&logo=vite)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
+[![Playwright](https://img.shields.io/badge/Playwright-E2E-2EAD33?style=flat-square&logo=playwright)](https://playwright.dev/)
 
 </div>
 
@@ -23,28 +24,9 @@
 - ⚡ **실시간 저장** - 입력 즉시 자동 저장
 - 📊 **재무 시뮬레이션** - 실시간 차트와 손익분기점 분석
 - 🎯 **PMF 진단** - Product-Market Fit 점수 및 개선 제안
-
----
-
-## 📊 코드 품질 현황
-
-```
-┌────────────────────────────────────────────────────┐
-│  종합 점수: 86/100 (B+)                             │
-│  평가: 프로덕션 준비 완료                            │
-└────────────────────────────────────────────────────┘
-
-평가 항목별 점수:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-가독성      ████████████████████ 90/100  (A)
-재사용성    █████████████████████ 92/100  (A)
-유지보수성  █████████████████    85/100  (B+)
-일관성      ██████████████████████ 95/100  (A+)
-성능        ██████████████       70/100  (C+)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-> 상세 분석 문서는 [`docs/`](./docs/) 디렉토리에서 확인할 수 있습니다.
+- 🔐 **인증 시스템** - 로그인/회원가입 및 프로필 관리
+- 📄 **문서 내보내기** - PDF/HTML 형식 지원
+- 📜 **버전 관리** - 문서 히스토리 및 비교 기능
 
 ---
 
@@ -67,10 +49,12 @@
 | **Step 5** | PMF 진단 - Product-Market Fit 설문 및 리포트 |
 
 ### 3. 핵심 기능
-- **Auto-save**: 사용자 입력 1초 후 자동 저장, 우측 상단 저장 상태 표시
-- **AI 사업계획서 생성**: 전문가급 사업계획서 자동 생성, 섹션별 "다시 쓰기"
-- **재무 시뮬레이션**: LTV, CAC, LTV/CAC 비율, 12개월 손익분기점 분석
-- **PMF 진단**: 10개 질문 기반 점수 산출, 리스크 및 개선 제언
+- **Auto-save**: 사용자 입력 1초 후 자동 저장
+- **AI 사업계획서 생성**: 전문가급 사업계획서 자동 생성
+- **재무 시뮬레이션**: LTV, CAC, LTV/CAC 비율, 손익분기점 분석
+- **PMF 진단**: 10개 질문 기반 점수 산출
+- **문서 내보내기**: PDF/HTML 형식 다운로드
+- **버전 히스토리**: 문서 변경 이력 관리
 
 ---
 
@@ -89,21 +73,20 @@
 | Tailwind CSS | 3.4.1 | 유틸리티 기반 스타일링 |
 | Lucide React | 0.554.0 | 아이콘 시스템 |
 | clsx | 2.1.1 | 조건부 클래스 결합 |
-| tailwind-merge | 3.4.0 | Tailwind 클래스 병합 |
 
 ### State & Data
 | 기술 | 버전 | 용도 |
 |------|------|------|
-| Zustand | 5.0.8 | 전역 상태 관리 (persist middleware) |
-| React Router DOM | 7.9.6 | 클라이언트 사이드 라우팅 |
+| Zustand | 5.0.8 | 전역 상태 관리 |
+| React Router DOM | 7.9.6 | 클라이언트 라우팅 |
 | React Hook Form | 7.66.1 | 폼 관리 |
 | Zod | 4.1.12 | 스키마 검증 |
 
-### Visualization
+### Visualization & Testing
 | 기술 | 버전 | 용도 |
 |------|------|------|
 | Recharts | 3.4.1 | 재무 차트 시각화 |
-| React Markdown | 10.1.0 | 마크다운 렌더링 |
+| Playwright | latest | E2E 테스트 |
 
 ---
 
@@ -131,65 +114,186 @@ npm run preview
 
 ---
 
+## 🧪 E2E 테스트
+
+### Playwright 설치
+```bash
+npm install -D @playwright/test
+npx playwright install
+```
+
+### 테스트 실행
+```bash
+# 모든 테스트 실행
+npx playwright test
+
+# UI 모드로 실행
+npx playwright test --ui
+
+# 특정 테스트 파일 실행
+npx playwright test tests/auth.spec.ts
+
+# 헤드리스 모드 비활성화 (브라우저 보이기)
+npx playwright test --headed
+```
+
+### 테스트 시나리오
+자세한 테스트 시나리오는 [`tests/`](./tests/) 디렉토리에서 확인할 수 있습니다.
+
+---
+
 ## 📁 프로젝트 구조
 
 ```
 bizplan_fe/
-├── docs/                             # 📚 프로젝트 분석 문서
-│   ├── 01-component-structure-analysis.md
-│   ├── 02-code-quality-assessment.md
-│   ├── 03-code-documentation-guide.md
-│   ├── 04-function-call-hierarchy.md
-│   └── README.md
-├── tasks/                            # 📋 개선 작업 태스크
-│   ├── priority-1/                   # 🔥 즉시 적용 (1-3일)
-│   ├── priority-2/                   # ⭐ 중기 개선 (1-2주)
-│   ├── priority-3/                   # 📊 장기 개선 (1개월)
-│   └── README.md
 ├── src/
-│   ├── components/
-│   │   ├── ui/                       # 공통 UI 컴포넌트 (글래스모피즘 스타일)
-│   │   │   ├── Button.tsx            # 네온 글로우 버튼
-│   │   │   ├── Card.tsx              # 글래스 카드
-│   │   │   ├── Input.tsx             # 글래스 입력 필드
-│   │   │   ├── Textarea.tsx          # 글래스 텍스트 영역
-│   │   │   ├── Badge.tsx             # 상태 배지
-│   │   │   ├── Progress.tsx          # 네온 진행률 바
-│   │   │   ├── Spinner.tsx           # 로딩 스피너
-│   │   │   └── index.ts              # 컴포넌트 exports
-│   │   ├── wizard/                   # Wizard 전용 컴포넌트
-│   │   │   ├── QuestionForm.tsx      # 질문 폼
-│   │   │   ├── FinancialSimulation.tsx  # 재무 시뮬레이션
-│   │   │   └── PMFSurvey.tsx         # PMF 설문
-│   │   ├── Layout.tsx                # 메인 레이아웃 (다크 테마)
-│   │   └── SaveIndicator.tsx         # 저장 상태 표시
-│   ├── pages/
-│   │   ├── ProjectCreate.tsx         # 프로젝트 생성 (메인 페이지)
-│   │   ├── WizardStep.tsx            # Wizard 단계별 페이지
-│   │   └── BusinessPlanViewer.tsx    # 사업계획서 뷰어
-│   ├── stores/
-│   │   ├── useProjectStore.ts        # 프로젝트 상태 관리
-│   │   ├── useWizardStore.ts         # Wizard 상태 관리
-│   │   ├── useFinancialStore.ts      # 재무 상태 관리
-│   │   └── usePMFStore.ts            # PMF 진단 상태 관리
-│   ├── hooks/
-│   │   ├── useAutoSave.ts            # Auto-save 커스텀 훅
-│   │   ├── useFinancialCalc.ts       # 재무 계산 커스텀 훅
-│   │   └── index.ts                  # 훅 exports
-│   ├── types/
-│   │   ├── index.ts                  # TypeScript 타입 정의
-│   │   └── mockData.ts               # Mock 데이터
-│   ├── lib/
-│   │   └── utils.ts                  # 유틸리티 함수 (cn)
-│   ├── App.tsx                       # 라우팅 설정
-│   ├── main.tsx                      # 앱 진입점
-│   └── index.css                     # 전역 스타일 (다크 테마)
-├── public/                           # 정적 파일
-├── index.html                        # HTML 엔트리
-├── package.json                      # 프로젝트 설정
-├── tailwind.config.js                # Tailwind 설정
-├── vite.config.ts                    # Vite 설정
-└── tsconfig.json                     # TypeScript 설정
+│   ├── components/                  # 공용 컴포넌트
+│   │   ├── index.ts                 # 통합 barrel export
+│   │   ├── ui/                      # UI 프리미티브
+│   │   │   ├── Button.tsx
+│   │   │   ├── Card.tsx
+│   │   │   ├── Input.tsx
+│   │   │   ├── Textarea.tsx
+│   │   │   ├── Badge.tsx
+│   │   │   ├── Progress.tsx
+│   │   │   ├── Spinner.tsx
+│   │   │   └── index.ts
+│   │   ├── layout/                  # 레이아웃 컴포넌트
+│   │   │   ├── Layout.tsx
+│   │   │   ├── PageLoadingFallback.tsx
+│   │   │   ├── ComponentLoadingFallback.tsx
+│   │   │   └── index.ts
+│   │   ├── feedback/                # 피드백 컴포넌트
+│   │   │   ├── Toast/
+│   │   │   ├── Modal/
+│   │   │   ├── SaveIndicator.tsx
+│   │   │   └── index.ts
+│   │   ├── auth/                    # 인증 관련 컴포넌트
+│   │   │   ├── AuthFormLayout.tsx
+│   │   │   ├── PasswordInput.tsx
+│   │   │   ├── ProtectedRoute.tsx
+│   │   │   └── index.ts
+│   │   └── financial/               # 재무 컴포넌트
+│   │       ├── FinancialMetrics.tsx
+│   │       ├── FinancialCharts.tsx
+│   │       └── index.ts
+│   │
+│   ├── pages/                       # 페이지 (관련 컴포넌트 포함)
+│   │   ├── ProjectCreate.tsx        # 프로젝트 생성 (메인)
+│   │   ├── auth/                    # 인증 페이지
+│   │   │   ├── LoginPage.tsx
+│   │   │   ├── SignupPage.tsx
+│   │   │   └── index.ts
+│   │   ├── wizard/                  # 마법사 페이지
+│   │   │   ├── WizardStep.tsx
+│   │   │   ├── QuestionForm.tsx
+│   │   │   ├── FinancialSimulation.tsx
+│   │   │   ├── PMFSurvey.tsx
+│   │   │   └── index.ts
+│   │   ├── business-plan/           # 사업계획서 페이지
+│   │   │   ├── BusinessPlanViewer.tsx
+│   │   │   ├── ExportDropdown.tsx
+│   │   │   ├── VersionHistoryPanel.tsx
+│   │   │   ├── DiffView.tsx
+│   │   │   └── index.ts
+│   │   ├── calculator/              # 재무 계산기 페이지
+│   │   │   ├── FinancialCalculatorPage.tsx
+│   │   │   ├── PreviewFinancialForm.tsx
+│   │   │   ├── CTABanner.tsx
+│   │   │   └── index.ts
+│   │   └── profile/                 # 프로필 페이지
+│   │       ├── ProfilePage.tsx
+│   │       ├── ProfileEditForm.tsx
+│   │       ├── ChangePasswordForm.tsx
+│   │       ├── DeleteAccountModal.tsx
+│   │       └── index.ts
+│   │
+│   ├── error/                       # 에러 처리 통합
+│   │   ├── GlobalErrorBoundary.tsx
+│   │   ├── NotFoundPage.tsx
+│   │   ├── ServerErrorPage.tsx
+│   │   ├── apiErrorHandler.ts
+│   │   ├── errorTypes.ts
+│   │   ├── errorMessages.ts
+│   │   └── index.ts
+│   │
+│   ├── common/                      # 공통 유틸리티
+│   │   ├── utils.ts
+│   │   ├── axios.ts
+│   │   ├── downloadFile.ts
+│   │   └── index.ts
+│   │
+│   ├── stores/                      # Zustand 스토어
+│   │   ├── useAuthStore.ts
+│   │   ├── useProjectStore.ts
+│   │   ├── useWizardStore.ts
+│   │   ├── useFinancialStore.ts
+│   │   └── usePMFStore.ts
+│   │
+│   ├── hooks/                       # 커스텀 훅
+│   │   ├── useAutoSave.ts
+│   │   ├── useFinancialCalc.ts
+│   │   ├── useExportDocument.ts
+│   │   └── index.ts
+│   │
+│   ├── types/                       # 타입 정의
+│   │   ├── index.ts
+│   │   └── mockData.ts
+│   │
+│   ├── router/                      # 라우팅
+│   │   ├── AppRoutes.tsx
+│   │   └── index.ts
+│   │
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+│
+├── tests/                           # E2E 테스트
+│   ├── auth.spec.ts
+│   ├── wizard.spec.ts
+│   ├── financial.spec.ts
+│   └── business-plan.spec.ts
+│
+├── docs/                            # 프로젝트 문서
+├── tasks/                           # 개선 작업 태스크
+├── playwright.config.ts             # Playwright 설정
+├── package.json
+├── vite.config.ts
+└── tsconfig.json
+```
+
+---
+
+## 🎨 Import 패턴
+
+### 컴포넌트 Import
+```typescript
+// 모든 컴포넌트를 @/components에서 import
+import { 
+  Button, 
+  Input, 
+  Card,
+  Layout, 
+  ToastProvider,
+  Modal,
+  ProtectedRoute,
+  FinancialMetrics,
+} from '@/components';
+```
+
+### 에러 처리 Import
+```typescript
+import { 
+  GlobalErrorBoundary,
+  handleApiError,
+  AppError,
+  ValidationError,
+} from '@/error';
+```
+
+### 공통 유틸리티 Import
+```typescript
+import { cn, debounce, formatCurrency } from '@/common';
 ```
 
 ---
@@ -197,7 +301,6 @@ bizplan_fe/
 ## 🎨 디자인 시스템
 
 ### Color Palette
-
 | 카테고리 | 색상 | 용도 |
 |----------|------|------|
 | **Neon Green** | `#22c55e` ~ `#4ade80` | 주요 액센트, CTA 버튼 |
@@ -206,30 +309,11 @@ bizplan_fe/
 | **Slate** | `#020617` ~ `#f8fafc` | 배경, 텍스트, 보더 |
 
 ### Typography
-
 | 폰트 | 용도 |
 |------|------|
 | **Outfit** | 본문, UI 텍스트 |
 | **Sora** | 헤딩, 강조 텍스트 |
 | **JetBrains Mono** | 코드, 숫자 |
-
-### Components
-
-- **글래스모피즘 카드**: `backdrop-blur-xl` + 반투명 배경
-- **네온 버튼**: 그라디언트 배경 + `box-shadow` 글로우
-- **입력 필드**: 포커스 시 네온 링 효과
-- **진행률 바**: 그라디언트 + 쉐도우
-
-### Animations
-
-| 애니메이션 | 효과 |
-|------------|------|
-| `float` | 플로팅 오브 효과 (8s) |
-| `fade-in` | 페이드 인 (0.6s) |
-| `slide-up` | 슬라이드 업 (0.5s) |
-| `scale-in` | 스케일 인 (0.3s) |
-| `pulse-slow` | 느린 펄스 (4s) |
-| `glow` | 네온 글로우 (2s) |
 
 ---
 
@@ -244,14 +328,8 @@ bizplan_fe/
                      ↓
            [AI 사업계획서 생성]
                      ↓
-              [PDF/HWP 내보내기]
+              [PDF/HTML 내보내기]
 ```
-
-1. **입력**: Wizard에서 각 질문에 답변
-2. **저장**: Zustand store에 실시간 저장 (LocalStorage persist)
-3. **계산**: 재무 데이터 입력 시 자동 메트릭 계산
-4. **생성**: Mock 데이터 기반 사업계획서 생성
-5. **내보내기**: HWP/PDF 형식 다운로드 (시뮬레이션)
 
 ---
 
@@ -267,63 +345,13 @@ bizplan_fe/
 
 ---
 
-## 📝 주요 사용자 흐름
-
-```
-1. 시작     → 프로젝트 이름 입력 및 템플릿 선택
-2. 입력     → 5단계 Wizard에서 각 질문에 답변
-3. 재무     → 실시간 차트로 재무 건전성 확인
-4. PMF 진단 → 설문 완료 후 진단 리포트 확인
-5. 생성     → AI 사업계획서 자동 생성
-6. 내보내기 → HWP/PDF 형식으로 다운로드
-```
-
----
-
-## 📋 개선 로드맵
-
-### 🔥 Priority 1 - 즉시 적용 (1-3일)
-- React.memo를 주요 컴포넌트에 적용
-- useCallback을 이벤트 핸들러에 적용
-- useMemo를 계산 비용이 높은 값에 적용
-- 매직 넘버를 상수로 추출
-
-### ⭐ Priority 2 - 중기 개선 (1-2주)
-- 중복 코드 제거 및 공통 컴포넌트 추출
-- Error Boundary 및 에러 처리 로직 추가
-- Custom Hook 추가로 공통 로직 추출
-- 복잡한 컴포넌트 분리
-
-### 📊 Priority 3 - 장기 개선 (1개월)
-- 단위 테스트 및 통합 테스트 추가
-- Code Splitting 및 Lazy Loading 적용
-- 번들 크기 최적화
-- 접근성(A11y) 개선
-- Zustand Selector 패턴 적용
-
-> 상세 태스크는 [`tasks/`](./tasks/) 디렉토리에서 확인할 수 있습니다.
-
----
-
-## 🚧 향후 개선 사항
-
-- [ ] 실제 AI API 연동 (OpenAI, Anthropic, Google Gemini)
-- [ ] 백엔드 연동 (사용자 인증, 프로젝트 클라우드 저장)
-- [ ] 협업 기능 (팀원 초대, 댓글, 실시간 편집)
-- [ ] 버전 히스토리 및 비교
-- [ ] 템플릿 커스터마이징
-- [ ] 다국어 지원 (영어, 일본어)
-- [ ] 모바일 앱 (React Native)
-
----
-
 ## 📚 문서
 
 | 문서 | 설명 |
 |------|------|
 | [컴포넌트 구조 분석](./docs/01-component-structure-analysis.md) | 컴포넌트 트리, 아키텍처 개요 |
 | [코드 품질 평가](./docs/02-code-quality-assessment.md) | 가독성, 재사용성, 성능 평가 |
-| [코드 문서화 가이드](./docs/03-code-documentation-guide.md) | 주석 작성 규칙, AI 프롬프팅 최적화 |
+| [코드 문서화 가이드](./docs/03-code-documentation-guide.md) | 주석 작성 규칙 |
 | [함수 호출 구조](./docs/04-function-call-hierarchy.md) | 페이지별 호출 구조, 데이터 흐름 |
 
 ---
