@@ -61,6 +61,9 @@ const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
 /** 프로필 페이지 */
 const ProfilePage = lazy(() => import('../pages/ProfilePage'));
 
+/** 재무 계산기 페이지 (Public) */
+const FinancialCalculatorPage = lazy(() => import('../pages/FinancialCalculatorPage'));
+
 /**
  * SuspenseWrapper 컴포넌트
  * 
@@ -123,6 +126,16 @@ export const AppRoutes: React.FC = () => {
         element={
           <SuspenseWrapper>
             <ProfilePage />
+          </SuspenseWrapper>
+        }
+      />
+
+      {/* 재무 계산기 페이지 (Public, 비로그인도 접근 가능) */}
+      <Route
+        path="/calculator"
+        element={
+          <SuspenseWrapper>
+            <FinancialCalculatorPage />
           </SuspenseWrapper>
         }
       />
