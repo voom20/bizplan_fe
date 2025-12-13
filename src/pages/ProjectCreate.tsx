@@ -179,6 +179,7 @@ export const ProjectCreate: React.FC = () => {
                           ? `${colors.border} ${colors.glow}` 
                           : 'border-white/10 hover:border-white/20',
                         isSelected && 'scale-[1.02]',
+                        isHovered === template.id && !isSelected && 'scale-[1.01] shadow-lg',
                         'group'
                       )}
                       onClick={() => {

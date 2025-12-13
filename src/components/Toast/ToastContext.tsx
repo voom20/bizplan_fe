@@ -11,8 +11,8 @@
  * 2. useToast() 훅으로 toast 함수 사용
  */
 
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { Toast, ToastContainer } from './Toast';
+import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { ToastContainer } from './Toast';
 
 // Toast 타입 정의
 export type ToastType = 'success' | 'error' | 'warning' | 'info';

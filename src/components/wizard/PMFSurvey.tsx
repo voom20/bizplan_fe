@@ -43,7 +43,7 @@ import { usePMFStore } from '../../stores/usePMFStore';
 import { pmfQuestions } from '../../types/mockData';
 import { Button, Badge, Card, CardHeader, CardTitle, CardContent } from '../ui';
 import { Progress } from '../ui';
-import { CheckCircle2, AlertCircle, TrendingUp, Target } from 'lucide-react';
+import { CheckCircle2, AlertCircle, TrendingUp, Target, Sparkles } from 'lucide-react';
 
 /**
  * PMFSurvey 컴포넌트
@@ -104,13 +104,20 @@ export const PMFSurvey: React.FC = () => {
               <div className="text-sm text-primary-100">점</div>
             </div>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">
-            PMF 진단 완료
-          </h3>
+          <div className="flex items-center justify-center gap-2 mb-2">
+            {report.score >= 70 ? (
+              <CheckCircle2 className="w-6 h-6 text-green-500" />
+            ) : (
+              <Target className="w-6 h-6 text-amber-500" />
+            )}
+            <h3 className="text-2xl font-bold text-gray-900">
+              PMF 진단 완료
+            </h3>
+          </div>
           <Badge
             variant={
               report.level === 'excellent' ? 'success' :
-              report.level === 'high' ? 'info' :
+              report.level === 'high' ? 'cyan' :
               report.level === 'medium' ? 'warning' : 'danger'
             }
             className="text-base px-4 py-1"
@@ -130,7 +137,7 @@ export const PMFSurvey: React.FC = () => {
 
         {/* Progress Bar */}
         <div>
-          <Progress value={report.score} max={100} className="h-3" />
+          <Progress value={report.score} max={100} className="h-3" showLabel />
         </div>
 
         {/* Risks */}
@@ -148,7 +155,7 @@ export const PMFSurvey: React.FC = () => {
                       <Badge
                         variant={
                           risk.severity === 'high' ? 'danger' :
-                          risk.severity === 'medium' ? 'warning' : 'default'
+                          risk.severity === 'medium' ? 'warning' : 'slate'
                         }
                         className="flex-shrink-0"
                       >
@@ -181,11 +188,12 @@ export const PMFSurvey: React.FC = () => {
                   <div className="flex items-start gap-3">
                     <Badge
                       variant={
-                        rec.priority === 'high' ? 'info' :
-                        rec.priority === 'medium' ? 'warning' : 'default'
+                        rec.priority === 'high' ? 'cyan' :
+                        rec.priority === 'medium' ? 'warning' : 'slate'
                       }
                       className="flex-shrink-0"
                     >
+                      <Sparkles className="w-3 h-3 mr-1" />
                       {rec.priority === 'high' && '높음'}
                       {rec.priority === 'medium' && '중간'}
                       {rec.priority === 'low' && '낮음'}

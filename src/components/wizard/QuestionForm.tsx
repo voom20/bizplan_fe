@@ -29,7 +29,7 @@
  * - useWizardStore: 질문 답변 데이터
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useWizardStore } from '../../stores/useWizardStore';
 import { useAutoSave } from '../../hooks/useAutoSave';
 import { Question } from '../../types';
