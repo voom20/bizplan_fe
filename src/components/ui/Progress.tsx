@@ -5,14 +5,17 @@
  * 진행률 바 컴포넌트
  * - 네온 그라디언트 스타일
  * - 애니메이션 효과
+ * - max 값 지원
  */
 
 import React from 'react';
 import { cn } from '../../lib/utils';
 
-interface ProgressProps {
-  /** 진행률 (0-100) */
+export interface ProgressProps {
+  /** 현재 값 */
   value: number;
+  /** 최대 값 (기본값: 100) */
+  max?: number;
   /** 레이블 표시 여부 */
   showLabel?: boolean;
   /** 추가 CSS 클래스 */
@@ -27,11 +30,13 @@ interface ProgressProps {
  */
 export const Progress: React.FC<ProgressProps> = ({
   value,
+  max = 100,
   showLabel = false,
   className,
   color = 'neon'
 }) => {
-  const clampedValue = Math.min(100, Math.max(0, value));
+  // 퍼센트 계산 (0-100 범위로 제한)
+  const percentage = Math.min(100, Math.max(0, (value / max) * 100));
   
   const colorStyles = {
     neon: 'from-neon-400 to-neon-500 shadow-neon-500/30',
@@ -44,17 +49,23 @@ export const Progress: React.FC<ProgressProps> = ({
       {showLabel && (
         <div className="flex justify-between text-sm mb-2">
           <span className="text-slate-400">진행률</span>
-          <span className="text-white font-medium">{Math.round(clampedValue)}%</span>
+          <span className="text-white font-medium">{Math.round(percentage)}%</span>
         </div>
       )}
-      <div className="h-2 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm">
+      <div 
+        className="h-2 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm"
+        role="progressbar"
+        aria-valuenow={value}
+        aria-valuemin={0}
+        aria-valuemax={max}
+      >
         <div
           className={cn(
             'h-full rounded-full transition-all duration-500 ease-out',
             'bg-gradient-to-r shadow-lg',
             colorStyles[color]
           )}
-          style={{ width: `${clampedValue}%` }}
+          style={{ width: `${percentage}%` }}
         />
       </div>
     </div>

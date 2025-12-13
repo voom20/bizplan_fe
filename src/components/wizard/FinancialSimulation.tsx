@@ -40,7 +40,7 @@ import { useFinancialStore } from '../../stores/useFinancialStore';
 import { Input, Badge } from '../ui';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { formatCurrency, formatNumber } from '../../lib/utils';
-import { AlertCircle, TrendingUp, Target, DollarSign } from 'lucide-react';
+import { AlertCircle, TrendingUp, Target, DollarSign, CheckCircle2 } from 'lucide-react';
 
 /**
  * FinancialSimulation 컴포넌트
@@ -144,7 +144,22 @@ export const FinancialSimulation: React.FC = () => {
       {/* Metrics Summary */}
       {metrics && (
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">핵심 지표</h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900">핵심 지표</h3>
+            <Badge variant={ltvCacWarning ? 'warning' : 'success'}>
+              {ltvCacWarning ? (
+                <>
+                  <AlertCircle className="w-3 h-3 mr-1" />
+                  개선 필요
+                </>
+              ) : (
+                <>
+                  <CheckCircle2 className="w-3 h-3 mr-1" />
+                  건강한 지표
+                </>
+              )}
+            </Badge>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-blue-50 rounded-lg p-4">
               <div className="flex items-center gap-2 text-blue-600 mb-2">

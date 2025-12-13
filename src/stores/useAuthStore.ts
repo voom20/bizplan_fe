@@ -24,11 +24,17 @@ export interface User {
 }
 
 // 인증 응답 타입
-interface AuthResponse {
+export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
   user: User;
 }
+
+/**
+ * API 사용 플래그
+ * true로 설정하면 실제 API 호출, false면 Mock 데이터 사용
+ */
+const USE_REAL_API = false;
 
 // 회원가입 요청 타입
 interface SignupRequest {
@@ -86,29 +92,37 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true, error: null });
 
         try {
-          // API 호출 (Mock)
-          // 실제 환경에서는 아래 주석을 해제
-          // const response = await api.post<AuthResponse>('/auth/login', credentials);
-          // const { accessToken, refreshToken, user } = response.data;
-          
-          // Mock 응답 (개발용)
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          
-          const mockUser: User = {
-            id: 'user_' + Date.now(),
-            email: credentials.email,
-            displayName: credentials.email.split('@')[0],
-            createdAt: new Date().toISOString(),
-          };
-          
-          const mockAccessToken = 'mock_access_token_' + Date.now();
-          const mockRefreshToken = 'mock_refresh_token_' + Date.now();
+          let userData: User;
+          let accessToken: string;
+          let refreshToken: string;
+
+          if (USE_REAL_API) {
+            // 실제 API 호출
+            const response = await api.post<AuthResponse>('/auth/login', credentials);
+            const authData = response.data;
+            userData = authData.user;
+            accessToken = authData.accessToken;
+            refreshToken = authData.refreshToken;
+          } else {
+            // Mock 응답 (개발용)
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            
+            userData = {
+              id: 'user_' + Date.now(),
+              email: credentials.email,
+              displayName: credentials.email.split('@')[0],
+              createdAt: new Date().toISOString(),
+            };
+            
+            accessToken = 'mock_access_token_' + Date.now();
+            refreshToken = 'mock_refresh_token_' + Date.now();
+          }
 
           // 토큰 저장
-          setTokens(mockAccessToken, mockRefreshToken);
+          setTokens(accessToken, refreshToken);
 
           set({
-            user: mockUser,
+            user: userData,
             isAuthenticated: true,
             isLoading: false,
             error: null,
@@ -128,16 +142,17 @@ export const useAuthStore = create<AuthState>()(
        * 
        * @param data - 이메일, 비밀번호, 이름
        */
-      signup: async (data: SignupRequest) => {
+      signup: async (signupData: SignupRequest) => {
         set({ isLoading: true, error: null });
 
         try {
-          // API 호출 (Mock)
-          // 실제 환경에서는 아래 주석을 해제
-          // await api.post('/auth/signup', data);
-          
-          // Mock 응답 (개발용)
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          if (USE_REAL_API) {
+            // 실제 API 호출
+            await api.post('/auth/signup', signupData);
+          } else {
+            // Mock 응답 (개발용)
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+          }
 
           set({ isLoading: false, error: null });
           
@@ -170,18 +185,20 @@ export const useAuthStore = create<AuthState>()(
        */
       refreshUser: async () => {
         try {
-          // API 호출 (Mock)
-          // 실제 환경에서는 아래 주석을 해제
-          // const response = await api.get<User>('/users/me');
-          // set({ user: response.data });
-          
-          // Mock: 현재 사용자 정보 유지
-          const currentUser = get().user;
-          if (currentUser) {
-            set({ user: currentUser });
+          if (USE_REAL_API) {
+            // 실제 API 호출
+            const response = await api.get<User>('/users/me');
+            set({ user: response.data });
+          } else {
+            // Mock: 현재 사용자 정보 유지
+            const currentUser = get().user;
+            if (currentUser) {
+              set({ user: currentUser });
+            }
           }
         } catch (error) {
           // 사용자 정보 조회 실패 시 로그아웃
+          console.error('Failed to refresh user:', error);
           get().logout();
         }
       },

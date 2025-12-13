@@ -52,7 +52,7 @@ import { debounce } from '../lib/utils';
  */
 export const useAutoSave = (data: any, delay: number = 1000) => {
   const { setSaveStatus } = useProjectStore();
-  const previousDataRef = useRef<string>();
+  const previousDataRef = useRef<string | undefined>(undefined);
 
   useEffect(() => {
     // 현재 데이터를 JSON 문자열로 변환하여 비교

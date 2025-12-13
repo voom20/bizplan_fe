@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { useProjectStore } from '../stores/useProjectStore';
-import { Check, Cloud, AlertCircle, Loader2 } from 'lucide-react';
+import { Check, Cloud, CloudOff, AlertCircle, Loader2 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 /**
@@ -19,8 +19,19 @@ import { cn } from '../lib/utils';
 export const SaveIndicator: React.FC = () => {
   const { saveStatus } = useProjectStore();
 
-  // idle 상태일 때는 아무것도 표시하지 않음
-  if (saveStatus === 'idle') return null;
+  // idle 상태일 때는 클라우드 동기화 완료 아이콘 표시
+  if (saveStatus === 'idle') {
+    return (
+      <div className={cn(
+        'flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium',
+        'backdrop-blur-sm border border-white/10',
+        'bg-slate-500/10 text-slate-400'
+      )}>
+        <Cloud className="h-4 w-4" />
+        <span>클라우드 동기화됨</span>
+      </div>
+    );
+  }
 
   // 상태별 표시 정보 매핑
   const indicators = {
@@ -39,11 +50,12 @@ export const SaveIndicator: React.FC = () => {
       bgClass: 'bg-neon-500/10',
     },
     error: {
-      icon: AlertCircle,
+      icon: CloudOff,
       text: '저장 실패',
       className: 'text-red-400',
       iconClass: '',
       bgClass: 'bg-red-500/10',
+      subIcon: AlertCircle,
     },
   };
 
