@@ -244,9 +244,11 @@ bizplan_fe/
 │   │   ├── AppRoutes.tsx
 │   │   └── index.ts
 │   │
+│   ├── styles/                      # 스타일
+│   │   └── index.css
+│   │
 │   ├── App.tsx
-│   ├── main.tsx
-│   └── index.css
+│   └── main.tsx
 │
 ├── tests/                           # E2E 테스트
 │   ├── auth.spec.ts
@@ -341,7 +343,7 @@ import { cn, debounce, formatCurrency } from '@/common';
 | ⚡ **실시간 피드백** | 입력 즉시 자동 저장 및 검증 |
 | 🎯 **시각적 피드백** | 진행률 바, 완료 체크마크, 색상 코딩 |
 | ✨ **부드러운 애니메이션** | 페이지 전환 및 상태 변화 시 효과 |
-| 📱 **반응형 디자인** | 다양한 화면 크기 지원 |
+| 📱 **반응형 디자인** | 모바일/태블릿/데스크톱/대형 화면 지원 |
 
 ---
 

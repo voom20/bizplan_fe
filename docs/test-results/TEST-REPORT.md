@@ -1,6 +1,6 @@
 # Playwright E2E 테스트 결과 보고서
 
-**테스트 실행일시**: 2024년 12월 13일  
+**테스트 실행일시**: 2025년 12월 13일  
 **브라우저**: Chromium  
 **환경**: macOS / Node.js
 
@@ -256,4 +256,4 @@ docs/test-results/
 
 **보고서 생성**: Playwright Test Runner  
 **버전**: @playwright/test  
-**최종 수정일**: 2024년 12월 13일
+**최종 수정일**: 2025년 12월 13일
