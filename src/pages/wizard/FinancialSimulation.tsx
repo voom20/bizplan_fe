@@ -37,7 +37,7 @@
 
 import React from 'react';
 import { useFinancialStore } from '@/stores/useFinancialStore';
-import { Input, Badge } from '@/components/ui';
+import { Input, Badge } from '@/components';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { formatCurrency, formatNumber } from '@/common/utils';
 import { AlertCircle, TrendingUp, Target, DollarSign, CheckCircle2 } from 'lucide-react';

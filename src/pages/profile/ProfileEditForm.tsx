@@ -16,8 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { User, Mail, Calendar, Save, Loader2 } from 'lucide-react';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { useToast } from '@/components/feedback/Toast';
-import { Input } from '@/components/ui/Input';
+import { useToast, Input } from '@/components';
 import { cn } from '@/common/utils';
 
 // 프로필 수정 스키마

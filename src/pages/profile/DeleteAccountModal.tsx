@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AlertTriangle, Lock, Eye, EyeOff, Loader2, X } from 'lucide-react';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { useToast } from '@/components/feedback/Toast';
+import { useToast } from '@/components';
 import { cn } from '@/common/utils';
 
 interface DeleteAccountModalProps {

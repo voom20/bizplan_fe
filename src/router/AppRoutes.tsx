@@ -30,7 +30,7 @@
 
 import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Layout, PageLoadingFallback } from '@/components/layout';
+import { Layout, PageLoadingFallback } from '@/components';
 
 // ============================================
 // Lazy Loading 페이지 컴포넌트

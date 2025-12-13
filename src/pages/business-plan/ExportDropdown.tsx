@@ -15,7 +15,7 @@ import { FileDown, ChevronDown, FileText, Code, File, Check, Loader2, AlertCircl
 import { useExportDocument } from '@/hooks/useExportDocument';
 import { ExportFormat } from '@/common/downloadFile';
 import { cn } from '@/common/utils';
-import { Progress } from '@/components/ui/Progress';
+import { Progress } from '@/components';
 
 /** 내보내기 형식 정보 */
 interface FormatOption {

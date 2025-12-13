@@ -17,7 +17,7 @@
 
 import { BrowserRouter } from 'react-router-dom';
 import { GlobalErrorBoundary } from '@/error';
-import { ToastProvider } from '@/components/feedback/Toast';
+import { ToastProvider } from '@/components';
 import { AppRoutes } from './router/AppRoutes';
 
 /**

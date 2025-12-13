@@ -20,7 +20,7 @@ import {
   Columns,
   AlignJustify
 } from 'lucide-react';
-import { Button, Badge } from '@/components/ui';
+import { Button, Badge } from '@/components';
 import { DocumentVersion } from '@/pages/business-plan/VersionListItem';
 import { cn } from '@/common/utils';
 

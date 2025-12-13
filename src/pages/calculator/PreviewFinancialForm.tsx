@@ -40,7 +40,7 @@ import {
   Percent,
   Calculator
 } from 'lucide-react';
-import { Input, Badge } from '@/components/ui';
+import { Input, Badge } from '@/components';
 import { formatCurrency, formatNumber, debounce } from '@/common/utils';
 import { cn } from '@/common/utils';
 

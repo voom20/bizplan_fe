@@ -25,7 +25,7 @@
  */
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { Button, Spinner, Badge } from '@/components/ui';
+import { Button, Spinner, Badge } from '@/components';
 import { ExportDropdown } from '@/pages/business-plan/ExportDropdown';
 import { VersionHistoryPanel } from '@/pages/business-plan/VersionHistoryPanel';
 import { DiffView } from '@/pages/business-plan/DiffView';

@@ -41,8 +41,7 @@
 import React, { useState } from 'react';
 import { usePMFStore } from '@/stores/usePMFStore';
 import { pmfQuestions } from '@/types/mockData';
-import { Button, Badge, Card, CardHeader, CardTitle, CardContent } from '@/components/ui';
-import { Progress } from '@/components/ui';
+import { Button, Badge, Card, CardHeader, CardTitle, CardContent, Progress } from '@/components';
 import { CheckCircle2, AlertCircle, TrendingUp, Target, Sparkles } from 'lucide-react';
 
 /**

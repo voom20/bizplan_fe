@@ -16,7 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Lock, Eye, EyeOff, Check, Shield, Loader2 } from 'lucide-react';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { useToast } from '@/components/feedback/Toast';
+import { useToast } from '@/components';
 import { cn } from '@/common/utils';
 
 // 비밀번호 변경 스키마

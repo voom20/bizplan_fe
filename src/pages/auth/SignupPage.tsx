@@ -17,7 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { UserPlus, Mail, Lock, Eye, EyeOff, User, Sparkles, Check } from 'lucide-react';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { useToast } from '@/components/feedback/Toast';
+import { useToast } from '@/components';
 import { cn } from '@/common/utils';
 
 // 폼 스키마

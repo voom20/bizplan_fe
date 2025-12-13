@@ -24,7 +24,7 @@ import { Calculator, ArrowLeft, Sparkles, TrendingUp, Shield, Zap } from 'lucide
 import { PreviewFinancialForm, FinancialInput } from '@/pages/calculator/PreviewFinancialForm';
 import { CTABanner } from '@/pages/calculator/CTABanner';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { Button } from '@/components/ui';
+import { Button } from '@/components';
 import { cn } from '@/common/utils';
 
 /**

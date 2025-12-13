@@ -24,7 +24,7 @@ import {
   ChevronRight,
   Loader2
 } from 'lucide-react';
-import { Button } from '@/components/ui';
+import { Button } from '@/components';
 import { VersionListItem, DocumentVersion } from '@/pages/business-plan/VersionListItem';
 import { cn } from '@/common/utils';
 

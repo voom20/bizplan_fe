@@ -34,7 +34,7 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useWizardStore } from '@/stores/useWizardStore';
-import { Button } from '@/components/ui';
+import { Button } from '@/components';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { QuestionForm } from '@/pages/wizard/QuestionForm';
 import { FinancialSimulation } from '@/pages/wizard/FinancialSimulation';
