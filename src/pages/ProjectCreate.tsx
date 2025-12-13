@@ -11,10 +11,10 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useProjectStore } from '../stores/useProjectStore';
-import { useWizardStore } from '../stores/useWizardStore';
-import { templates } from '../types/mockData';
-import { TemplateType } from '../types';
+import { useProjectStore } from '@/stores/useProjectStore';
+import { useWizardStore } from '@/stores/useWizardStore';
+import { templates } from '@/types/mockData';
+import { TemplateType } from '@/types';
 import { 
   Rocket, 
   Sparkles, 
@@ -26,7 +26,7 @@ import {
   BarChart3,
   FileText
 } from 'lucide-react';
-import { cn } from '../lib/utils';
+import { cn } from '@/common/utils';
 
 /**
  * ProjectCreate 컴포넌트

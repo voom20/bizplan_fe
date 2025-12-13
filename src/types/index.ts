@@ -217,3 +217,39 @@ export interface BusinessPlan {
 
 /** 저장 상태 */
 export type SaveStatus = 'idle' | 'saving' | 'saved' | 'error';
+
+// ============================================
+// Version History Types - 버전 관리 관련
+// ============================================
+
+/** 버전 상태 타입 */
+export type VersionStatus = 'DRAFT' | 'COMPLETED' | 'GENERATING';
+
+/** 문서 버전 */
+export interface DocumentVersion {
+  /** 버전 ID */
+  id: string;
+  /** 버전 번호 */
+  version: number;
+  /** 생성 일시 */
+  createdAt: string;
+  /** 버전 상태 */
+  status: VersionStatus;
+  /** 변경 내용 요약 */
+  summary?: string;
+  /** 변경된 섹션 수 */
+  changedSections?: number;
+}
+
+// ============================================
+// Export Document Types - 문서 내보내기 관련
+// ============================================
+
+/** 내보내기 형식 */
+export type ExportFormat = 'pdf' | 'html' | 'hwp';
+
+/** 내보내기 옵션 */
+export interface ExportOptions {
+  format: ExportFormat;
+  version?: number;
+}

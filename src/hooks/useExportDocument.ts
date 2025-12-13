@@ -13,14 +13,14 @@
  */
 
 import { useState, useCallback } from 'react';
-import { useToast } from '../components/Toast';
-import { useProjectStore } from '../stores/useProjectStore';
+import { useToast } from '@/components';
+import { useProjectStore } from '@/stores/useProjectStore';
 import { 
   ExportFormat, 
   downloadBlob, 
   generateExportFilename, 
   createMockDocument 
-} from '../lib/downloadFile';
+} from '@/common/downloadFile';
 
 /** 내보내기 상태 */
 interface ExportState {

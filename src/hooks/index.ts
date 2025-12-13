@@ -14,7 +14,7 @@
  * import { useFinancialCalc } from '../hooks/useFinancialCalc';
  */
 
-export { useAutoSave } from './useAutoSave';
-export { useFinancialCalc } from './useFinancialCalc';
-export { useExportDocument } from './useExportDocument';
+export { useAutoSave } from '@/hooks/useAutoSave';
+export { useFinancialCalc } from '@/hooks/useFinancialCalc';
+export { useExportDocument } from '@/hooks/useExportDocument';
 

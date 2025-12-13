@@ -10,7 +10,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { cn } from '../../lib/utils';
+import { cn } from '@/common/utils';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   /** 레이블 텍스트 */

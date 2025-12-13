@@ -31,8 +31,8 @@
  */
 
 import { useEffect, useRef } from 'react';
-import { useProjectStore } from '../stores/useProjectStore';
-import { debounce } from '../lib/utils';
+import { useProjectStore } from '@/stores/useProjectStore';
+import { debounce } from '@/common/utils';
 
 /**
  * useAutoSave Hook

@@ -27,7 +27,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Project, TemplateType, SaveStatus } from '../types';
+import { Project, TemplateType, SaveStatus } from '@/types';
 
 interface ProjectState {
   /** 현재 작업 중인 프로젝트 */

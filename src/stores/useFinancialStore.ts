@@ -33,7 +33,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { FinancialInput, FinancialMetrics, ChartDataPoint } from '../types';
+import { FinancialInput, FinancialMetrics, ChartDataPoint } from '@/types';
 
 interface FinancialState {
   /** 사용자 입력 값 */
