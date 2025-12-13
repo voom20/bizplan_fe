@@ -24,9 +24,9 @@ import {
   ChevronRight,
   Loader2
 } from 'lucide-react';
-import { Button } from './ui';
+import { Button } from '../../components/ui';
 import { VersionListItem, DocumentVersion } from './VersionListItem';
-import { cn } from '../lib/utils';
+import { cn } from '../../lib/utils';
 
 interface VersionHistoryPanelProps {
   /** 패널 열림 상태 */

@@ -12,7 +12,7 @@
 
 import React, { useState } from 'react';
 import { RefreshCw, Sparkles, Check, AlertCircle } from 'lucide-react';
-import { cn } from '../lib/utils';
+import { cn } from '../../lib/utils';
 
 /** 재생성 상태 */
 type RegenerateStatus = 'idle' | 'loading' | 'success' | 'error';

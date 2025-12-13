@@ -15,9 +15,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Lock, Eye, EyeOff, Check, Shield, Loader2 } from 'lucide-react';
-import { useAuthStore } from '../stores/useAuthStore';
-import { useToast } from './Toast';
-import { cn } from '../lib/utils';
+import { useAuthStore } from '../../stores/useAuthStore';
+import { useToast } from '../../components/Toast';
+import { cn } from '../../lib/utils';
 
 // 비밀번호 변경 스키마
 const passwordSchema = z.object({

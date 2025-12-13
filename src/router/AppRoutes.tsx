@@ -41,16 +41,16 @@ import { PageLoadingFallback } from '../components/PageLoadingFallback';
 const ProjectCreate = lazy(() => import('../pages/ProjectCreate'));
 
 /** 로그인 페이지 */
-const LoginPage = lazy(() => import('../pages/LoginPage'));
+const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
 
 /** 회원가입 페이지 */
-const SignupPage = lazy(() => import('../pages/SignupPage'));
+const SignupPage = lazy(() => import('../pages/auth/SignupPage'));
 
 /** 마법사 단계 페이지 */
-const WizardStep = lazy(() => import('../pages/WizardStep'));
+const WizardStep = lazy(() => import('../pages/wizard/WizardStep'));
 
 /** 사업계획서 뷰어 페이지 */
-const BusinessPlanViewer = lazy(() => import('../pages/BusinessPlanViewer'));
+const BusinessPlanViewer = lazy(() => import('../pages/business-plan/BusinessPlanViewer'));
 
 /** 서버 에러 페이지 */
 const ServerErrorPage = lazy(() => import('../pages/ServerErrorPage'));
@@ -59,10 +59,10 @@ const ServerErrorPage = lazy(() => import('../pages/ServerErrorPage'));
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
 
 /** 프로필 페이지 */
-const ProfilePage = lazy(() => import('../pages/ProfilePage'));
+const ProfilePage = lazy(() => import('../pages/profile/ProfilePage'));
 
 /** 재무 계산기 페이지 (Public) */
-const FinancialCalculatorPage = lazy(() => import('../pages/FinancialCalculatorPage'));
+const FinancialCalculatorPage = lazy(() => import('../pages/calculator/FinancialCalculatorPage'));
 
 /**
  * SuspenseWrapper 컴포넌트

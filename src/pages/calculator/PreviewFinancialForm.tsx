@@ -40,9 +40,9 @@ import {
   Percent,
   Calculator
 } from 'lucide-react';
-import { Input, Badge } from './ui';
-import { formatCurrency, formatNumber, debounce } from '../lib/utils';
-import { cn } from '../lib/utils';
+import { Input, Badge } from '../../components/ui';
+import { formatCurrency, formatNumber, debounce } from '../../lib/utils';
+import { cn } from '../../lib/utils';
 
 /** 재무 입력 데이터 타입 */
 export interface FinancialInput {

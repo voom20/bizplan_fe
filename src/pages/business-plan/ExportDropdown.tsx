@@ -12,10 +12,10 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { FileDown, ChevronDown, FileText, Code, File, Check, Loader2, AlertCircle } from 'lucide-react';
-import { useExportDocument } from '../hooks/useExportDocument';
-import { ExportFormat } from '../lib/downloadFile';
-import { cn } from '../lib/utils';
-import { Progress } from './ui/Progress';
+import { useExportDocument } from '../../hooks/useExportDocument';
+import { ExportFormat } from '../../lib/downloadFile';
+import { cn } from '../../lib/utils';
+import { Progress } from '../../components/ui/Progress';
 
 /** 내보내기 형식 정보 */
 interface FormatOption {

@@ -25,13 +25,13 @@
  */
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { Button, Spinner, Badge } from '../components/ui';
-import { ExportDropdown } from '../components/ExportDropdown';
-import { VersionHistoryPanel } from '../components/VersionHistoryPanel';
-import { DiffView } from '../components/DiffView';
-import { SectionRegenerateButton } from '../components/SectionRegenerateButton';
-import { DocumentVersion } from '../components/VersionListItem';
-import { mockBusinessPlan } from '../types/mockData';
+import { Button, Spinner, Badge } from '../../components/ui';
+import { ExportDropdown } from './ExportDropdown';
+import { VersionHistoryPanel } from './VersionHistoryPanel';
+import { DiffView } from './DiffView';
+import { SectionRegenerateButton } from './SectionRegenerateButton';
+import { DocumentVersion } from './VersionListItem';
+import { mockBusinessPlan } from '../../types/mockData';
 import ReactMarkdown from 'react-markdown';
 import { Sparkles, FileText, Calendar, Clock, History } from 'lucide-react';
 

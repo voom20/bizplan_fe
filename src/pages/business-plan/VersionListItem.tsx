@@ -12,8 +12,8 @@
 
 import React from 'react';
 import { Check, Clock, FileText, Sparkles } from 'lucide-react';
-import { Badge } from './ui';
-import { cn } from '../lib/utils';
+import { Badge } from '../../components/ui';
+import { cn } from '../../lib/utils';
 
 /** 버전 상태 타입 */
 export type VersionStatus = 'DRAFT' | 'COMPLETED' | 'GENERATING';

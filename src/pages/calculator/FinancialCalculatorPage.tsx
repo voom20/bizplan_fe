@@ -21,11 +21,11 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Calculator, ArrowLeft, Sparkles, TrendingUp, Shield, Zap } from 'lucide-react';
-import { PreviewFinancialForm, FinancialInput } from '../components/PreviewFinancialForm';
-import { CTABanner } from '../components/CTABanner';
-import { useAuthStore } from '../stores/useAuthStore';
-import { Button } from '../components/ui';
-import { cn } from '../lib/utils';
+import { PreviewFinancialForm, FinancialInput } from './PreviewFinancialForm';
+import { CTABanner } from './CTABanner';
+import { useAuthStore } from '../../stores/useAuthStore';
+import { Button } from '../../components/ui';
+import { cn } from '../../lib/utils';
 
 /**
  * FinancialCalculatorPage 컴포넌트

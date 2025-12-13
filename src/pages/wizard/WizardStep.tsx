@@ -33,12 +33,12 @@
 
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useWizardStore } from '../stores/useWizardStore';
-import { Button } from '../components/ui';
+import { useWizardStore } from '../../stores/useWizardStore';
+import { Button } from '../../components/ui';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { QuestionForm } from '../components/wizard/QuestionForm';
-import { FinancialSimulation } from '../components/wizard/FinancialSimulation';
-import { PMFSurvey } from '../components/wizard/PMFSurvey';
+import { QuestionForm } from './QuestionForm';
+import { FinancialSimulation } from './FinancialSimulation';
+import { PMFSurvey } from './PMFSurvey';
 
 /**
  * WizardStep 컴포넌트
