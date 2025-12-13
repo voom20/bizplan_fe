@@ -13,6 +13,27 @@ import React, { useEffect, useCallback, ReactNode } from 'react';
 import { X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
+/**
+ * 열린 모달 개수를 추적하여 body 스크롤을 관리
+ * - 첫 번째 모달이 열릴 때만 스크롤 잠금
+ * - 마지막 모달이 닫힐 때만 스크롤 해제
+ */
+let openModalCount = 0;
+
+const lockBodyScroll = (): void => {
+  openModalCount++;
+  if (openModalCount === 1) {
+    document.body.style.overflow = 'hidden';
+  }
+};
+
+const unlockBodyScroll = (): void => {
+  openModalCount = Math.max(0, openModalCount - 1);
+  if (openModalCount === 0) {
+    document.body.style.overflow = 'unset';
+  }
+};
+
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -56,12 +77,16 @@ export const Modal: React.FC<ModalProps> = ({
   useEffect(() => {
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
+      lockBodyScroll();
     }
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'unset';
+      // isOpen은 클로저에서 effect 실행 시점의 값을 캡처
+      // 모달이 열려 있었을 때만 스크롤 잠금 해제
+      if (isOpen) {
+        unlockBodyScroll();
+      }
     };
   }, [isOpen, handleKeyDown]);
 
