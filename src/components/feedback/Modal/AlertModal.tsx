@@ -18,7 +18,7 @@
 
 import React from 'react';
 import { CheckCircle, AlertCircle, AlertTriangle, Info } from 'lucide-react';
-import { Modal } from '@/components/Modal/Modal';
+import { Modal } from './Modal';
 import { cn } from '@/common/utils';
 
 export interface AlertModalProps {

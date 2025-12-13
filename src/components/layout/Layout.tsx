@@ -12,7 +12,7 @@ import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useWizardStore } from '@/stores/useWizardStore';
 import { useProjectStore } from '@/stores/useProjectStore';
-import { SaveIndicator } from '@/components/SaveIndicator';
+import { SaveIndicator } from '@/components/feedback/SaveIndicator';
 import { Progress } from '@/components/ui';
 import { Check, Sparkles, ChevronRight } from 'lucide-react';
 import { cn } from '@/common/utils';

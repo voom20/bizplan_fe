@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { Spinner } from './ui/Spinner';
+import { Spinner } from '@/components/ui/Spinner';
 
 /**
  * PageLoadingFallback 컴포넌트

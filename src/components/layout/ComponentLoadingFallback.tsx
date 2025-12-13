@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { Spinner } from './ui/Spinner';
+import { Spinner } from '@/components/ui/Spinner';
 
 interface ComponentLoadingFallbackProps {
   /** 로딩 메시지 (기본값: '컴포넌트 로딩 중...') */
