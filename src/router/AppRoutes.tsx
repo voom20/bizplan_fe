@@ -53,10 +53,10 @@ const WizardStep = lazy(() => import('@/pages/wizard/WizardStep'));
 const BusinessPlanViewer = lazy(() => import('@/pages/business-plan/BusinessPlanViewer'));
 
 /** 서버 에러 페이지 */
-const ServerErrorPage = lazy(() => import('@/pages/ServerErrorPage'));
+const ServerErrorPage = lazy(() => import('@/error/ServerErrorPage'));
 
 /** 404 페이지 */
-const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
+const NotFoundPage = lazy(() => import('@/error/NotFoundPage'));
 
 /** 프로필 페이지 */
 const ProfilePage = lazy(() => import('@/pages/profile/ProfilePage'));

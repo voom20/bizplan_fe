@@ -23,6 +23,7 @@ export default defineConfig({
       '@/hooks': path.resolve(__dirname, './src/hooks'),
       '@/stores': path.resolve(__dirname, './src/stores'),
       '@/common': path.resolve(__dirname, './src/common'),
+      '@/error': path.resolve(__dirname, './src/error'),
       '@/types': path.resolve(__dirname, './src/types'),
     },
   },

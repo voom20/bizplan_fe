@@ -14,6 +14,3 @@ export { default as api, setTokens, clearTokens } from './axios';
 // 파일 다운로드
 export * from './downloadFile';
 
-// 에러 처리
-export * from './error';
-
