@@ -30,14 +30,14 @@ export default defineConfig({
     // 기본 URL
     baseURL: 'http://localhost:5173',
     
-    // 실패 시 스크린샷
-    screenshot: 'only-on-failure',
+    // 항상 스크린샷 저장
+    screenshot: 'on',
     
-    // 실패 시 트레이스
-    trace: 'on-first-retry',
+    // 항상 트레이스 저장
+    trace: 'on',
     
-    // 비디오 녹화 (실패 시)
-    video: 'on-first-retry',
+    // 비디오 녹화
+    video: 'on',
   },
 
   // 프로젝트별 브라우저 설정
