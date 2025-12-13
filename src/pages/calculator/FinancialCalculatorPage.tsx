@@ -47,28 +47,29 @@ export const FinancialCalculatorPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen py-8 px-4">
-      <div className="max-w-6xl mx-auto">
-        {/* 헤더 */}
-        <div className="mb-8">
+    <div className="min-h-screen py-4 sm:py-6 lg:py-8 px-4">
+      <div className="max-w-6xl xl:max-w-7xl 2xl:max-w-[1600px] mx-auto">
+        {/* 헤더 - 반응형 */}
+        <div className="mb-4 sm:mb-6 lg:mb-8">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-6"
+            className="inline-flex items-center gap-2 text-sm sm:text-base text-slate-400 hover:text-white transition-colors mb-4 sm:mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
-            홈으로 돌아가기
+            <span className="hidden sm:inline">홈으로 돌아가기</span>
+            <span className="sm:hidden">홈</span>
           </Link>
 
-          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-            <div className="flex items-start gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-neon-500 flex items-center justify-center shadow-neon-lg flex-shrink-0">
-                <Calculator className="w-8 h-8 text-slate-900" />
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 sm:gap-6">
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-500 to-neon-500 flex items-center justify-center shadow-neon-lg flex-shrink-0">
+                <Calculator className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-slate-900" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-white mb-2">
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1 sm:mb-2">
                   재무 추정 계산기
                 </h1>
-                <p className="text-slate-400 max-w-xl">
+                <p className="text-xs sm:text-sm lg:text-base text-slate-400 max-w-xl">
                   핵심 비즈니스 변수를 입력하면 손익분기점, LTV/CAC 비율 등 
                   주요 재무 지표를 실시간으로 확인할 수 있습니다.
                 </p>

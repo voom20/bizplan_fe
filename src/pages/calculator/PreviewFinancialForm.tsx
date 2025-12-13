@@ -226,20 +226,20 @@ export const PreviewFinancialForm: React.FC<PreviewFinancialFormProps> = ({
   const ltvCacWarning = metrics.ltvCacRatio < 3;
 
   return (
-    <div className="space-y-8">
-      {/* 입력 섹션 */}
-      <div className="glass-card p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center">
-            <Calculator className="w-5 h-5 text-cyan-400" />
+    <div className="space-y-4 sm:space-y-6 lg:space-y-8">
+      {/* 입력 섹션 - 반응형 */}
+      <div className="glass-card p-4 sm:p-6">
+        <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-cyan-500/20 flex items-center justify-center">
+            <Calculator className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-white">재무 가정 입력</h3>
-            <p className="text-sm text-slate-400">핵심 변수를 입력하면 자동으로 계산됩니다</p>
+            <h3 className="text-base sm:text-lg font-semibold text-white">재무 가정 입력</h3>
+            <p className="text-xs sm:text-sm text-slate-400">핵심 변수를 입력하면 자동으로 계산됩니다</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           <div className="space-y-1">
             <label className="flex items-center gap-2 text-sm font-medium text-slate-300">
               <DollarSign className="w-4 h-4 text-neon-400" />
@@ -328,14 +328,14 @@ export const PreviewFinancialForm: React.FC<PreviewFinancialFormProps> = ({
         </div>
       </div>
 
-      {/* 핵심 지표 */}
-      <div className="glass-card p-6">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-neon-500/20 flex items-center justify-center">
-              <TrendingUp className="w-5 h-5 text-neon-400" />
+      {/* 핵심 지표 - 반응형 */}
+      <div className="glass-card p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-neon-500/20 flex items-center justify-center">
+              <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-neon-400" />
             </div>
-            <h3 className="text-lg font-semibold text-white">핵심 지표</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-white">핵심 지표</h3>
           </div>
           <Badge variant={ltvCacWarning ? 'warning' : 'success'}>
             {ltvCacWarning ? (
@@ -352,52 +352,52 @@ export const PreviewFinancialForm: React.FC<PreviewFinancialFormProps> = ({
           </Badge>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="glass-card-hover p-4">
-            <div className="flex items-center gap-2 text-cyan-400 mb-2">
-              <DollarSign className="w-4 h-4" />
-              <span className="text-sm font-medium">월 매출</span>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div className="glass-card-hover p-3 sm:p-4">
+            <div className="flex items-center gap-1.5 sm:gap-2 text-cyan-400 mb-1 sm:mb-2">
+              <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm font-medium">월 매출</span>
             </div>
-            <div className="text-2xl font-bold text-white">
+            <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
               {formatCurrency(metrics.revenue)}
             </div>
           </div>
 
-          <div className="glass-card-hover p-4">
-            <div className="flex items-center gap-2 text-neon-400 mb-2">
-              <TrendingUp className="w-4 h-4" />
-              <span className="text-sm font-medium">LTV</span>
+          <div className="glass-card-hover p-3 sm:p-4">
+            <div className="flex items-center gap-1.5 sm:gap-2 text-neon-400 mb-1 sm:mb-2">
+              <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm font-medium">LTV</span>
             </div>
-            <div className="text-2xl font-bold text-white">
+            <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
               {formatCurrency(metrics.ltv)}
             </div>
           </div>
 
           <div className={cn(
-            'glass-card-hover p-4',
+            'glass-card-hover p-3 sm:p-4',
             ltvCacWarning && 'border-red-500/30'
           )}>
             <div className={cn(
-              'flex items-center gap-2 mb-2',
+              'flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2',
               ltvCacWarning ? 'text-red-400' : 'text-neon-400'
             )}>
-              <Target className="w-4 h-4" />
-              <span className="text-sm font-medium">LTV/CAC</span>
+              <Target className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm font-medium">LTV/CAC</span>
             </div>
             <div className={cn(
-              'text-2xl font-bold',
+              'text-lg sm:text-xl lg:text-2xl font-bold',
               ltvCacWarning ? 'text-red-400' : 'text-white'
             )}>
               {metrics.ltvCacRatio.toFixed(1)}x
             </div>
           </div>
 
-          <div className="glass-card-hover p-4">
-            <div className="flex items-center gap-2 text-violet-400 mb-2">
-              <Target className="w-4 h-4" />
-              <span className="text-sm font-medium">손익분기점</span>
+          <div className="glass-card-hover p-3 sm:p-4">
+            <div className="flex items-center gap-1.5 sm:gap-2 text-violet-400 mb-1 sm:mb-2">
+              <Target className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm font-medium">손익분기점</span>
             </div>
-            <div className="text-2xl font-bold text-white">
+            <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
               {formatNumber(metrics.breakEvenPoint)}명
             </div>
           </div>
