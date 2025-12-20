@@ -6,15 +6,18 @@
  * - 사용자로부터 프로젝트명과 템플릿 선택을 받음
  * - 프로젝트 생성 후 마법사 단계로 이동
  * 
+ * API 연동:
+ * - projectService.getTemplates() 로 템플릿 목록 조회
+ * - projectService.createProject() 로 프로젝트 생성
+ * 
  * 디자인: 다크 모드 + 글래스모피즘 + 네온 액센트
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProjectStore } from '@/stores/useProjectStore';
 import { useWizardStore } from '@/stores/useWizardStore';
-import { templates } from '@/types/mockData';
-import { TemplateType } from '@/types';
+import { templates as fallbackTemplates } from '@/types/mockData';
 import { 
   Rocket, 
   Sparkles, 
@@ -24,7 +27,8 @@ import {
   Check,
   Zap,
   BarChart3,
-  FileText
+  FileText,
+  Loader2
 } from 'lucide-react';
 import { cn } from '@/common/utils';
 
@@ -34,18 +38,77 @@ import { cn } from '@/common/utils';
  */
 export const ProjectCreate: React.FC = () => {
   const navigate = useNavigate();
-  const { createProject } = useProjectStore();
-  const { resetWizard } = useWizardStore();
+  const { 
+    templates, 
+    fetchTemplates, 
+    createProject, 
+    isLoading: isCreating,
+    error: storeError 
+  } = useProjectStore();
+  const { resetWizard, setProjectId } = useWizardStore();
 
   const [projectName, setProjectName] = useState('');
-  const [selectedTemplate, setSelectedTemplate] = useState<TemplateType | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [error, setError] = useState('');
   const [isHovered, setIsHovered] = useState<string | null>(null);
+  const [isLoadingTemplates, setIsLoadingTemplates] = useState(true);
+
+  // 템플릿 목록을 API 또는 fallback에서 가져옴
+  const displayTemplates = templates.length > 0 
+    ? templates.map(t => ({
+        id: t.code,
+        name: t.name,
+        description: t.description,
+        icon: getTemplateIcon(t.code),
+        features: getTemplateFeatures(t.category),
+      }))
+    : fallbackTemplates;
+
+  /**
+   * 템플릿 아이콘 반환
+   */
+  function getTemplateIcon(code: string): string {
+    const icons: Record<string, string> = {
+      'pre-startup': '🚀',
+      'early-startup': '💼',
+      'bank-loan': '🏦',
+    };
+    return icons[code] || '📄';
+  }
+
+  /**
+   * 템플릿 특징 반환
+   */
+  function getTemplateFeatures(category: string): string[] {
+    const features: Record<string, string[]> = {
+      'government': ['정부지원 양식 호환', 'PMF 검증 전략', '상세 재무 분석', '투자 유치 준비'],
+      'bank': ['담보/신용 분석', '상환 계획 수립', '리스크 관리', '보수적 재무 예측'],
+      'investor': ['아이디어 검증 중심', 'MVP 구축 계획', '초기 시장 조사', '기본 재무 설계'],
+    };
+    return features[category] || features['government'];
+  }
+
+  /**
+   * 컴포넌트 마운트 시 템플릿 목록 조회
+   */
+  useEffect(() => {
+    const loadTemplates = async () => {
+      setIsLoadingTemplates(true);
+      try {
+        await fetchTemplates();
+      } catch (err) {
+        console.warn('Failed to fetch templates from API, using fallback:', err);
+      } finally {
+        setIsLoadingTemplates(false);
+      }
+    };
+    loadTemplates();
+  }, [fetchTemplates]);
 
   /**
    * 폼 제출 핸들러
    */
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!projectName.trim()) {
@@ -58,12 +121,21 @@ export const ProjectCreate: React.FC = () => {
       return;
     }
 
-    createProject(projectName, selectedTemplate);
-    resetWizard();
-    navigate('/wizard/1');
+    try {
+      // API로 프로젝트 생성
+      const project = await createProject(projectName, selectedTemplate);
+      
+      // 위저드 초기화 및 프로젝트 ID 설정
+      resetWizard();
+      setProjectId(project.id);
+      
+      navigate('/wizard/1');
+    } catch (err) {
+      setError(storeError || '프로젝트 생성에 실패했습니다.');
+    }
   };
 
-  // 템플릿 아이콘 매핑 (mockData.ts의 ID와 일치)
+  // 템플릿 아이콘 매핑
   const templateIcons: Record<string, React.ReactNode> = {
     'pre-startup': <Rocket className="w-8 h-8" />,
     'early-startup': <TrendingUp className="w-8 h-8" />,
@@ -162,85 +234,92 @@ export const ProjectCreate: React.FC = () => {
                 <h2 className="text-lg sm:text-xl font-semibold text-white">템플릿 선택</h2>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
-                {templates.map((template) => {
-                  const isSelected = selectedTemplate === template.id;
-                  const colors = templateColors[template.id] || templateColors['pre-startup'];
-                  
-                  return (
-                    <button
-                      key={template.id}
-                      type="button"
-                      className={cn(
-                        'relative p-4 sm:p-5 lg:p-6 rounded-xl text-left transition-all duration-300',
-                        'bg-gradient-to-br border',
-                        colors.bg,
-                        isSelected 
-                          ? `${colors.border} ${colors.glow}` 
-                          : 'border-white/10 hover:border-white/20',
-                        isSelected && 'scale-[1.02]',
-                        isHovered === template.id && !isSelected && 'scale-[1.01] shadow-lg',
-                        'group'
-                      )}
-                      onClick={() => {
-                        setSelectedTemplate(template.id);
-                        setError('');
-                      }}
-                      onMouseEnter={() => setIsHovered(template.id)}
-                      onMouseLeave={() => setIsHovered(null)}
-                    >
-                      {/* 선택 체크마크 */}
-                      {isSelected && (
-                        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-neon-500 flex items-center justify-center animate-scale-in">
-                          <Check className="w-3 h-3 sm:w-4 sm:h-4 text-slate-900" />
+              {isLoadingTemplates ? (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="w-8 h-8 text-neon-400 animate-spin" />
+                  <span className="ml-3 text-slate-400">템플릿 로딩 중...</span>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
+                  {displayTemplates.map((template) => {
+                    const isSelected = selectedTemplate === template.id;
+                    const colors = templateColors[template.id] || templateColors['pre-startup'];
+                    
+                    return (
+                      <button
+                        key={template.id}
+                        type="button"
+                        className={cn(
+                          'relative p-4 sm:p-5 lg:p-6 rounded-xl text-left transition-all duration-300',
+                          'bg-gradient-to-br border',
+                          colors.bg,
+                          isSelected 
+                            ? `${colors.border} ${colors.glow}` 
+                            : 'border-white/10 hover:border-white/20',
+                          isSelected && 'scale-[1.02]',
+                          isHovered === template.id && !isSelected && 'scale-[1.01] shadow-lg',
+                          'group'
+                        )}
+                        onClick={() => {
+                          setSelectedTemplate(template.id);
+                          setError('');
+                        }}
+                        onMouseEnter={() => setIsHovered(template.id)}
+                        onMouseLeave={() => setIsHovered(null)}
+                      >
+                        {/* 선택 체크마크 */}
+                        {isSelected && (
+                          <div className="absolute top-3 right-3 sm:top-4 sm:right-4 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-neon-500 flex items-center justify-center animate-scale-in">
+                            <Check className="w-3 h-3 sm:w-4 sm:h-4 text-slate-900" />
+                          </div>
+                        )}
+
+                        {/* 아이콘 - 반응형 */}
+                        <div className={cn(
+                          'w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-lg sm:rounded-xl mb-3 sm:mb-4 flex items-center justify-center transition-all duration-300',
+                          isSelected 
+                            ? 'bg-white/20 text-white' 
+                            : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white'
+                        )}>
+                          {templateIcons[template.id] || <FileText className="w-8 h-8" />}
                         </div>
-                      )}
 
-                      {/* 아이콘 - 반응형 */}
-                      <div className={cn(
-                        'w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-lg sm:rounded-xl mb-3 sm:mb-4 flex items-center justify-center transition-all duration-300',
-                        isSelected 
-                          ? 'bg-white/20 text-white' 
-                          : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white'
-                      )}>
-                        {templateIcons[template.id]}
-                      </div>
+                        {/* 템플릿 정보 - 반응형 */}
+                        <h3 className={cn(
+                          'text-base sm:text-lg font-semibold mb-1 sm:mb-2 transition-colors',
+                          isSelected ? 'text-white' : 'text-slate-200'
+                        )}>
+                          {template.name}
+                        </h3>
+                        
+                        <p className="text-xs sm:text-sm text-slate-400 mb-3 sm:mb-4 line-clamp-2">
+                          {template.description}
+                        </p>
 
-                      {/* 템플릿 정보 - 반응형 */}
-                      <h3 className={cn(
-                        'text-base sm:text-lg font-semibold mb-1 sm:mb-2 transition-colors',
-                        isSelected ? 'text-white' : 'text-slate-200'
-                      )}>
-                        {template.name}
-                      </h3>
-                      
-                      <p className="text-xs sm:text-sm text-slate-400 mb-3 sm:mb-4 line-clamp-2">
-                        {template.description}
-                      </p>
-
-                      {/* 특징 목록 */}
-                      <ul className="space-y-2">
-                        {template.features.slice(0, 3).map((feature, index) => (
-                          <li 
-                            key={index} 
-                            className="flex items-start gap-2 text-xs text-slate-500"
-                          >
-                            <span className={cn(
-                              'mt-0.5 transition-colors',
-                              isSelected ? 'text-neon-400' : 'text-slate-600'
-                            )}>
-                              ✦
-                            </span>
-                            <span className={isSelected ? 'text-slate-300' : ''}>
-                              {feature}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </button>
-                  );
-                })}
-              </div>
+                        {/* 특징 목록 */}
+                        <ul className="space-y-2">
+                          {template.features.slice(0, 3).map((feature, index) => (
+                            <li 
+                              key={index} 
+                              className="flex items-start gap-2 text-xs text-slate-500"
+                            >
+                              <span className={cn(
+                                'mt-0.5 transition-colors',
+                                isSelected ? 'text-neon-400' : 'text-slate-600'
+                              )}>
+                                ✦
+                              </span>
+                              <span className={isSelected ? 'text-slate-300' : ''}>
+                                {feature}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             {/* 에러 메시지 */}
@@ -257,10 +336,20 @@ export const ProjectCreate: React.FC = () => {
             <div className="flex justify-center pt-4 animate-slide-up delay-200">
               <button
                 type="submit"
-                className="btn-neon group flex items-center gap-3 text-lg"
+                disabled={isCreating}
+                className="btn-neon group flex items-center gap-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <span>사업계획서 작성 시작</span>
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                {isCreating ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>프로젝트 생성 중...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>사업계획서 작성 시작</span>
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  </>
+                )}
               </button>
             </div>
           </form>
