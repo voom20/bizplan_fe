@@ -79,7 +79,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ questions, stepId })
   return (
     <div className="space-y-6">
       {questions.map((question) => {
-        const value = stepData[question.id] || '';
+        const value = (stepData[question.id] as string) || '';
 
         switch (question.type) {
           case 'text':

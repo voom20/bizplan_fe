@@ -100,7 +100,7 @@ export const ProfilePage: React.FC = () => {
             <div className="relative">
               <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-neon-500 to-cyan-500 flex items-center justify-center shadow-neon-lg">
                 <span className="text-3xl font-bold text-slate-900">
-                  {user?.displayName?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || '?'}
+                  {user?.name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || '?'}
                 </span>
               </div>
               <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-neon-500 flex items-center justify-center shadow-lg">
@@ -110,7 +110,7 @@ export const ProfilePage: React.FC = () => {
             
             <div>
               <h1 className="text-3xl font-bold text-white">
-                {user?.displayName || '사용자'}
+                {user?.name || '사용자'}
               </h1>
               <p className="text-slate-400">{user?.email}</p>
             </div>

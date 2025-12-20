@@ -117,7 +117,7 @@ export const SignupPage: React.FC = () => {
       await signup({
         email: data.email,
         password: data.password,
-        displayName: data.displayName,
+        name: data.displayName,
       });
       toast.success('회원가입이 완료되었습니다.\n로그인해주세요.');
       navigate('/login');

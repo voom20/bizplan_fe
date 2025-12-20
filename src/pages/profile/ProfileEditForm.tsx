@@ -51,14 +51,14 @@ export const ProfileEditForm: React.FC = () => {
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      displayName: user?.displayName || '',
+      displayName: user?.name || '',
     },
   });
 
   // 사용자 정보 변경 시 폼 리셋
   useEffect(() => {
     if (user) {
-      reset({ displayName: user.displayName || '' });
+      reset({ displayName: user.name || '' });
     }
   }, [user, reset]);
 
@@ -76,7 +76,7 @@ export const ProfileEditForm: React.FC = () => {
       if (user) {
         setUser({
           ...user,
-          displayName: data.displayName,
+          name: data.displayName,
         });
       }
 
