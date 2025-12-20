@@ -15,6 +15,33 @@ export default defineConfig({
       brotliSize: true,
     }),
   ],
+  // 개발 서버 설정
+  server: {
+    port: 5173,
+    // CORS 우회를 위한 프록시 설정
+    proxy: {
+      // /api 로 시작하는 요청을 백엔드 서버로 프록시
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        secure: false,
+        // 필요시 경로 재작성
+        // rewrite: (path) => path.replace(/^\/api/, '/api'),
+      },
+      // /projects 로 시작하는 요청도 프록시 (백엔드 API 구조에 맞춤)
+      '/projects': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        secure: false,
+      },
+      // /financials 로 시작하는 요청 프록시
+      '/financials': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

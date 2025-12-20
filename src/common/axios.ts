@@ -8,14 +8,22 @@
  * - 응답 에러 처리 (401 시 토큰 갱신 시도)
  * 
  * 사용법:
- * import api from '@/lib/axios';
- * const response = await api.get('/users/me');
+ * import api from '@/common/axios';
+ * const response = await api.get('/api/v1/users/me');
+ * 
+ * 프록시 설정:
+ * - 개발 환경: Vite 프록시를 통해 CORS 우회 (vite.config.ts 참조)
+ * - 운영 환경: 환경변수 VITE_API_URL 사용
  */
 
 import axios, { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
 
-// API 기본 URL (환경변수에서 가져오거나 기본값 사용)
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1';
+/**
+ * API 기본 URL 설정
+ * - 개발 환경: 빈 문자열 (Vite 프록시 사용)
+ * - 운영 환경: 환경변수 VITE_API_URL 사용
+ */
+const BASE_URL = import.meta.env.VITE_API_URL || '';
 
 // 토큰 갱신 중인지 여부
 let isRefreshing = false;
