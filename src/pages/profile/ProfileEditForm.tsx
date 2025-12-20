@@ -82,7 +82,7 @@ export const ProfileEditForm: React.FC = () => {
 
       toast.success('프로필이 저장되었습니다.');
       reset(data); // isDirty 리셋
-    } catch (error) {
+    } catch {
       toast.error('프로필 저장에 실패했습니다.');
     } finally {
       setIsSubmitting(false);

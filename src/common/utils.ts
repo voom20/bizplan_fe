@@ -50,6 +50,7 @@ export function cn(...inputs: ClassValue[]) {
  * @param {number} wait - 지연 시간 (밀리초)
  * @returns {Function} Debounce가 적용된 함수
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number

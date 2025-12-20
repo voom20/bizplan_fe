@@ -18,7 +18,8 @@ import { SectionRegenerateButton } from '@/pages/business-plan/SectionRegenerate
 import { DocumentVersion } from '@/pages/business-plan/VersionListItem';
 import { mockBusinessPlan } from '@/types/mockData';
 import ReactMarkdown from 'react-markdown';
-import { Sparkles, FileText, Calendar, Clock, History, ArrowLeft, FileDown } from 'lucide-react';
+import { Sparkles, FileText, Calendar, Clock, History, ArrowLeft } from 'lucide-react';
+import { ExportDropdown } from './ExportDropdown';
 import { Link } from 'react-router-dom';
 
 /**
@@ -245,12 +246,7 @@ export const BusinessPlanViewer: React.FC = () => {
                 <History className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
                 <span className="hidden sm:inline">버전 </span>{versions.length}
               </Button>
-              <Button
-                className="px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base bg-gradient-to-r from-neon-500 to-neon-600 text-slate-900"
-              >
-                <FileDown className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
-                <span className="hidden sm:inline">문서 </span>내보내기
-              </Button>
+              <ExportDropdown version={currentVersion} />
             </div>
           </div>
         </div>
@@ -293,13 +289,7 @@ export const BusinessPlanViewer: React.FC = () => {
               <ArrowLeft className="w-5 h-5 mr-2" />
               돌아가기
             </Button>
-            <Button
-              onClick={() => {}}
-              className="w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4 text-base sm:text-lg bg-gradient-to-r from-neon-500 to-neon-600 text-slate-900"
-            >
-              <FileDown className="w-5 h-5 mr-2" />
-              내보내기
-            </Button>
+            <ExportDropdown version={currentVersion} />
           </div>
         </div>
 

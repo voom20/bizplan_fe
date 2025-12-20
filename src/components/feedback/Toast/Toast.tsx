@@ -12,7 +12,7 @@
 import React from 'react';
 import { X, CheckCircle, AlertCircle, AlertTriangle, Info } from 'lucide-react';
 import { cn } from '@/common/utils';
-import type { ToastItem, ToastType } from './ToastContext';
+import type { ToastItem, ToastType } from './ToastTypes';
 
 // 타입별 스타일 및 아이콘 설정
 const toastConfig: Record<ToastType, { 

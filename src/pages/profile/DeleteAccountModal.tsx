@@ -75,7 +75,7 @@ export const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({
       // 로그아웃 및 홈으로 이동
       logout();
       navigate('/');
-    } catch (err) {
+    } catch {
       setError('회원 탈퇴에 실패했습니다. 비밀번호를 확인해주세요.');
     } finally {
       setIsDeleting(false);
