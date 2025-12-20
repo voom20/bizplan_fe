@@ -4,22 +4,27 @@
  * 파일 용도:
  * 애플리케이션 전체에서 사용하는 TypeScript 타입 정의
  * - 프로젝트, 마법사, 재무, PMF 등 모든 도메인의 타입 정의
+ * - API 요청/응답 타입 (api.ts에서 re-export)
  * - 타입 안정성 보장
  * - IDE 자동완성 지원
  * 
  * 타입 분류:
- * 1. Template Types: 사업 템플릿 관련
- * 2. Project Types: 프로젝트 정보 관련
- * 3. Wizard Step Types: 마법사 단계 및 질문 관련
- * 4. Financial Types: 재무 시뮬레이션 관련
- * 5. PMF Survey Types: PMF 진단 관련
- * 6. AI Draft Types: 사업계획서 생성 관련
- * 7. Save Status Types: 저장 상태 관련
+ * 1. API Types: API 요청/응답 관련 (api.ts)
+ * 2. Template Types: 사업 템플릿 관련
+ * 3. Project Types: 프로젝트 정보 관련
+ * 4. Wizard Step Types: 마법사 단계 및 질문 관련
+ * 5. Financial Types: 재무 시뮬레이션 관련
+ * 6. PMF Survey Types: PMF 진단 관련
+ * 7. AI Draft Types: 사업계획서 생성 관련
+ * 8. Save Status Types: 저장 상태 관련
  * 
  * 사용처:
  * - 모든 컴포넌트, Store, Hook에서 import하여 사용
  * - 타입 체크를 통한 런타임 에러 방지
  */
+
+// API 타입 re-export
+export * from './api';
 
 // ============================================
 // Template Types - 사업 템플릿 관련
