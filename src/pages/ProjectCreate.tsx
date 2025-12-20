@@ -54,7 +54,8 @@ export const ProjectCreate: React.FC = () => {
   const [isLoadingTemplates, setIsLoadingTemplates] = useState(true);
 
   // 템플릿 목록을 API 또는 fallback에서 가져옴
-  const displayTemplates = templates.length > 0 
+  // templates가 undefined일 수 있으므로 optional chaining 사용
+  const displayTemplates = (templates?.length ?? 0) > 0 
     ? templates.map(t => ({
         id: t.code,
         name: t.name,

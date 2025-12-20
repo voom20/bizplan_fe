@@ -254,6 +254,14 @@ export const useProjectStore = create<ProjectState>()(
       partialize: (state) => ({
         currentProject: state.currentProject,
       }),
+      // hydration 후 templates가 undefined가 되지 않도록 merge
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        ...(persistedState as Partial<ProjectState>),
+        // 항상 배열로 초기화
+        templates: currentState.templates,
+        projects: currentState.projects,
+      }),
     }
   )
 );
