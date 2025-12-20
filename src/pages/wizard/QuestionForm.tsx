@@ -72,14 +72,14 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ questions, stepId })
    * @param {string} questionId - 질문 ID
    * @param {any} value - 입력된 값
    */
-  const handleChange = (questionId: string, value: any) => {
+  const handleChange = (questionId: string, value: string | number) => {
     updateStepData(stepId, questionId, value);
   };
 
   return (
     <div className="space-y-6">
       {questions.map((question) => {
-        const value = stepData[question.id] || '';
+        const value = (stepData[question.id] as string) || '';
 
         switch (question.type) {
           case 'text':

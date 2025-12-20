@@ -7,63 +7,36 @@
  * - 로그인/로그아웃/회원가입 액션
  * - LocalStorage 연동으로 세션 유지
  * 
+ * API 연동:
+ * - authService를 통해 백엔드 API 호출
+ * 
  * 사용법:
  * const { user, isAuthenticated, login, logout } = useAuthStore();
  */
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import api, { setTokens, clearTokens } from '@/common/axios';
-
-// 사용자 타입
-export interface User {
-  id: string;
-  email: string;
-  displayName?: string;
-  createdAt?: string;
-}
-
-// 인증 응답 타입
-export interface AuthResponse {
-  accessToken: string;
-  refreshToken: string;
-  user: User;
-}
-
-/**
- * API 사용 플래그
- * true로 설정하면 실제 API 호출, false면 Mock 데이터 사용
- */
-const USE_REAL_API = false;
-
-// 회원가입 요청 타입
-interface SignupRequest {
-  email: string;
-  password: string;
-  displayName?: string;
-}
-
-// 로그인 요청 타입
-interface LoginRequest {
-  email: string;
-  password: string;
-}
+import { authService } from '@/service/authService';
+import type { UserInfo } from '@/types';
 
 // Store 상태 타입
 interface AuthState {
   // 상태
-  user: User | null;
+  user: UserInfo | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
 
   // 액션
-  login: (credentials: LoginRequest) => Promise<void>;
-  signup: (data: SignupRequest) => Promise<void>;
-  logout: () => void;
+  login: (credentials: { email: string; password: string }) => Promise<void>;
+  signup: (data: { email: string; password: string; name: string; company?: string }) => Promise<void>;
+  logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
+  updateProfile: (data: { name?: string; company?: string }) => Promise<void>;
+  changePassword: (data: { currentPassword: string; newPassword: string }) => Promise<void>;
+  deleteAccount: (password: string) => Promise<void>;
   clearError: () => void;
-  setUser: (user: User | null) => void;
+  setUser: (user: UserInfo | null) => void;
 }
 
 /**
@@ -73,6 +46,7 @@ interface AuthState {
  * - 인증 상태를 전역에서 관리
  * - 로그인/로그아웃/회원가입 로직 처리
  * - persist 미들웨어로 새로고침 시에도 상태 유지
+ * - authService를 통해 백엔드 API 연동
  */
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -85,44 +59,17 @@ export const useAuthStore = create<AuthState>()(
 
       /**
        * 로그인
-       * 
        * @param credentials - 이메일, 비밀번호
        */
-      login: async (credentials: LoginRequest) => {
+      login: async (credentials) => {
         set({ isLoading: true, error: null });
 
         try {
-          let userData: User;
-          let accessToken: string;
-          let refreshToken: string;
-
-          if (USE_REAL_API) {
-            // 실제 API 호출
-            const response = await api.post<AuthResponse>('/auth/login', credentials);
-            const authData = response.data;
-            userData = authData.user;
-            accessToken = authData.accessToken;
-            refreshToken = authData.refreshToken;
-          } else {
-            // Mock 응답 (개발용)
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            
-            userData = {
-              id: 'user_' + Date.now(),
-              email: credentials.email,
-              displayName: credentials.email.split('@')[0],
-              createdAt: new Date().toISOString(),
-            };
-            
-            accessToken = 'mock_access_token_' + Date.now();
-            refreshToken = 'mock_refresh_token_' + Date.now();
-          }
-
-          // 토큰 저장
-          setTokens(accessToken, refreshToken);
+          // 실제 API 호출 (authService가 토큰 저장 처리)
+          const response = await authService.login(credentials);
 
           set({
-            user: userData,
+            user: response.user,
             isAuthenticated: true,
             isLoading: false,
             error: null,
@@ -139,25 +86,16 @@ export const useAuthStore = create<AuthState>()(
 
       /**
        * 회원가입
-       * 
-       * @param data - 이메일, 비밀번호, 이름
+       * @param data - 이메일, 비밀번호, 이름, 회사명(선택)
        */
-      signup: async (signupData: SignupRequest) => {
+      signup: async (signupData) => {
         set({ isLoading: true, error: null });
 
         try {
-          if (USE_REAL_API) {
-            // 실제 API 호출
-            await api.post('/auth/signup', signupData);
-          } else {
-            // Mock 응답 (개발용)
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-          }
-
+          // 실제 API 호출
+          await authService.signup(signupData);
           set({ isLoading: false, error: null });
-          
           // 회원가입 성공 후 자동 로그인은 하지 않음
-          // 사용자가 로그인 페이지에서 직접 로그인하도록 유도
         } catch (error) {
           const message = error instanceof Error ? error.message : '회원가입에 실패했습니다.';
           set({
@@ -171,13 +109,17 @@ export const useAuthStore = create<AuthState>()(
       /**
        * 로그아웃
        */
-      logout: () => {
-        clearTokens();
-        set({
-          user: null,
-          isAuthenticated: false,
-          error: null,
-        });
+      logout: async () => {
+        try {
+          await authService.logout();
+        } finally {
+          // 서버 요청 실패해도 로컬 상태는 초기화
+          set({
+            user: null,
+            isAuthenticated: false,
+            error: null,
+          });
+        }
       },
 
       /**
@@ -185,21 +127,61 @@ export const useAuthStore = create<AuthState>()(
        */
       refreshUser: async () => {
         try {
-          if (USE_REAL_API) {
-            // 실제 API 호출
-            const response = await api.get<User>('/users/me');
-            set({ user: response.data });
-          } else {
-            // Mock: 현재 사용자 정보 유지
-            const currentUser = get().user;
-            if (currentUser) {
-              set({ user: currentUser });
-            }
-          }
+          const userData = await authService.getMe();
+          set({ user: userData });
         } catch (error) {
           // 사용자 정보 조회 실패 시 로그아웃
           console.error('Failed to refresh user:', error);
           get().logout();
+        }
+      },
+
+      /**
+       * 프로필 수정
+       */
+      updateProfile: async (data) => {
+        set({ isLoading: true, error: null });
+        try {
+          const updatedUser = await authService.updateProfile(data);
+          set({ user: updatedUser, isLoading: false });
+        } catch (error) {
+          const message = error instanceof Error ? error.message : '프로필 수정에 실패했습니다.';
+          set({ isLoading: false, error: message });
+          throw error;
+        }
+      },
+
+      /**
+       * 비밀번호 변경
+       */
+      changePassword: async (data) => {
+        set({ isLoading: true, error: null });
+        try {
+          await authService.changePassword(data);
+          set({ isLoading: false });
+        } catch (error) {
+          const message = error instanceof Error ? error.message : '비밀번호 변경에 실패했습니다.';
+          set({ isLoading: false, error: message });
+          throw error;
+        }
+      },
+
+      /**
+       * 계정 삭제
+       */
+      deleteAccount: async (password) => {
+        set({ isLoading: true, error: null });
+        try {
+          await authService.deleteAccount(password);
+          set({
+            user: null,
+            isAuthenticated: false,
+            isLoading: false,
+          });
+        } catch (error) {
+          const message = error instanceof Error ? error.message : '계정 삭제에 실패했습니다.';
+          set({ isLoading: false, error: message });
+          throw error;
         }
       },
 
@@ -213,7 +195,7 @@ export const useAuthStore = create<AuthState>()(
       /**
        * 사용자 설정 (테스트/개발용)
        */
-      setUser: (user: User | null) => {
+      setUser: (user) => {
         set({
           user,
           isAuthenticated: !!user,
@@ -232,4 +214,3 @@ export const useAuthStore = create<AuthState>()(
 );
 
 export default useAuthStore;
-

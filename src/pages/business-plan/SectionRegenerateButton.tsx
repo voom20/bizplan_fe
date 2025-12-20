@@ -63,7 +63,7 @@ export const SectionRegenerateButton: React.FC<SectionRegenerateButtonProps> = (
       
       // 2초 후 idle로 복귀
       setTimeout(() => setStatus('idle'), 2000);
-    } catch (error) {
+    } catch {
       setStatus('error');
       
       // 3초 후 idle로 복귀

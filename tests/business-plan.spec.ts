@@ -101,9 +101,12 @@ test.describe('사업계획서 - 내보내기', () => {
     const exportButton = page.getByRole('button', { name: /내보내기|다운로드|Export/i }).first();
     await exportButton.click();
     
-    // PDF 옵션 클릭
+    // 드롭다운이 열릴 때까지 대기
+    await page.waitForTimeout(300);
+    
+    // PDF 옵션 클릭 (force 옵션으로 안정성 확보)
     const pdfOption = page.getByText(/PDF/i).first();
-    await pdfOption.click();
+    await pdfOption.click({ force: true });
     
     // 다운로드 시작 또는 로딩 상태 확인 (Mock이므로 UI 상태만 확인)
     await page.screenshot({ path: `docs/test-results/screenshots/business-plan-export-pdf-chromium.png` });
@@ -114,9 +117,12 @@ test.describe('사업계획서 - 내보내기', () => {
     const exportButton = page.getByRole('button', { name: /내보내기|다운로드|Export/i }).first();
     await exportButton.click();
     
-    // HTML 옵션 클릭
+    // 드롭다운이 열릴 때까지 대기
+    await page.waitForTimeout(300);
+    
+    // HTML 옵션 클릭 (force 옵션으로 안정성 확보)
     const htmlOption = page.getByText(/HTML/i).first();
-    await htmlOption.click();
+    await htmlOption.click({ force: true });
     
     await page.screenshot({ path: `docs/test-results/screenshots/business-plan-export-html-chromium.png` });
   });

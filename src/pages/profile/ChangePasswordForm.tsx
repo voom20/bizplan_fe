@@ -100,7 +100,7 @@ export const ChangePasswordForm: React.FC = () => {
   /**
    * 폼 제출 핸들러
    */
-  const onSubmit = async (_data: PasswordFormData) => {
+  const onSubmit = async () => {
     setIsSubmitting(true);
 
     try {
@@ -115,7 +115,7 @@ export const ChangePasswordForm: React.FC = () => {
       setTimeout(() => {
         logout();
       }, 2000);
-    } catch (error) {
+    } catch {
       toast.error('비밀번호 변경에 실패했습니다.');
     } finally {
       setIsSubmitting(false);

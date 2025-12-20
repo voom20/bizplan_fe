@@ -51,14 +51,14 @@ export const ProfileEditForm: React.FC = () => {
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      displayName: user?.displayName || '',
+      displayName: user?.name || '',
     },
   });
 
   // 사용자 정보 변경 시 폼 리셋
   useEffect(() => {
     if (user) {
-      reset({ displayName: user.displayName || '' });
+      reset({ displayName: user.name || '' });
     }
   }, [user, reset]);
 
@@ -76,13 +76,13 @@ export const ProfileEditForm: React.FC = () => {
       if (user) {
         setUser({
           ...user,
-          displayName: data.displayName,
+          name: data.displayName,
         });
       }
 
       toast.success('프로필이 저장되었습니다.');
       reset(data); // isDirty 리셋
-    } catch (error) {
+    } catch {
       toast.error('프로필 저장에 실패했습니다.');
     } finally {
       setIsSubmitting(false);

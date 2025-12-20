@@ -6,39 +6,23 @@
  * - 5단계 마법사의 현재 단계 추적
  * - 각 단계별 질문 답변 저장
  * - 단계 완료 여부 검증
- * - localStorage에 자동 영속화
+ * - 백엔드 API 연동으로 데이터 동기화
  * 
- * 호출 구조:
- * useWizardStore (이 Store)
- *   ├─> setCurrentStep() - WizardStep 페이지에서 호출
- *   ├─> updateStepData() - QuestionForm, FinancialSimulation, PMFSurvey에서 호출
- *   ├─> getStepData() - 각 단계 컴포넌트에서 데이터 로드
- *   ├─> isStepCompleted() - Layout, WizardStep에서 진행률 확인
- *   ├─> goToNextStep() / goToPreviousStep() - 네비게이션
- *   └─> resetWizard() - ProjectCreate에서 새 프로젝트 시작 시 호출
+ * API 연동:
+ * - wizardService를 통해 백엔드 API 호출
  * 
  * 사용하는 컴포넌트:
  * - WizardStep: 단계 관리 및 네비게이션
  * - QuestionForm: 질문 답변 저장
  * - Layout: 진행률 표시
  * - ProjectCreate: 마법사 초기화
- * 
- * 데이터 구조:
- * wizardData: {
- *   1: { question1: 'answer1', question2: 'answer2' },
- *   2: { question3: 'answer3' },
- *   ...
- * }
- * 
- * 영속화:
- * - localStorage 키: 'wizard-storage'
- * - 브라우저 새로고침 시에도 데이터 유지
  */
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { WizardData, WizardStep } from '@/types';
-import { wizardSteps } from '../types/mockData';
+import { wizardService } from '@/service/wizardService';
+import { wizardSteps as defaultWizardSteps } from '../types/mockData';
 
 interface WizardState {
   /** 현재 마법사 단계 (1-5) */
@@ -47,13 +31,27 @@ interface WizardState {
   steps: WizardStep[];
   /** 단계별 사용자 입력 데이터 */
   wizardData: WizardData;
+  /** 현재 프로젝트 ID */
+  projectId: string | null;
+  /** 로딩 상태 */
+  isLoading: boolean;
+  /** 저장 중 상태 */
+  isSaving: boolean;
+  /** 에러 메시지 */
+  error: string | null;
   
+  /** 프로젝트 ID 설정 */
+  setProjectId: (projectId: string) => void;
   /** 현재 단계 설정 */
   setCurrentStep: (step: number) => void;
-  /** 단계별 질문 답변 업데이트 */
-  updateStepData: (stepId: number, questionId: string, value: any) => void;
+  /** 답변 데이터 로드 (API) */
+  loadAnswers: (projectId: string) => Promise<void>;
+  /** 단계별 질문 답변 업데이트 (로컬 + API 저장) */
+  updateStepData: (stepId: number, questionId: string, value: unknown) => void;
+  /** 단계 답변 저장 (API) */
+  saveStepAnswers: (stepId: number) => Promise<void>;
   /** 특정 단계의 데이터 조회 */
-  getStepData: (stepId: number) => Record<string, any>;
+  getStepData: (stepId: number) => Record<string, unknown>;
   /** 단계 완료 여부 확인 (필수 질문 모두 답변 완료) */
   isStepCompleted: (stepId: number) => boolean;
   /** 다음 단계로 이동 */
@@ -62,6 +60,8 @@ interface WizardState {
   goToPreviousStep: () => void;
   /** 마법사 초기화 */
   resetWizard: () => void;
+  /** 에러 초기화 */
+  clearError: () => void;
 }
 
 /**
@@ -71,38 +71,63 @@ interface WizardState {
  * - 5단계 마법사의 상태 관리
  * - 사용자 입력 데이터 저장 및 검증
  * - 진행률 추적
- * 
- * 주요 기능:
- * 1. 단계별 질문 답변 관리
- * 2. 필수 질문 답변 검증
- * 3. 단계 간 네비게이션
- * 4. localStorage 자동 영속화
+ * - wizardService를 통해 백엔드 API 연동
  */
 export const useWizardStore = create<WizardState>()(
   persist(
     (set, get) => ({
       currentStep: 1,
-      steps: wizardSteps,
+      steps: defaultWizardSteps,
       wizardData: {},
+      projectId: null,
+      isLoading: false,
+      isSaving: false,
+      error: null,
+
+      /**
+       * 프로젝트 ID 설정
+       * @param projectId - 프로젝트 ID
+       */
+      setProjectId: (projectId: string) => {
+        set({ projectId });
+      },
 
       /**
        * 현재 단계 설정
-       * 
-       * @param {number} step - 설정할 단계 번호 (1-5)
+       * @param step - 설정할 단계 번호 (1-5)
        */
       setCurrentStep: (step: number) => {
         set({ currentStep: step });
       },
 
       /**
-       * 단계별 질문 답변 업데이트
-       * - 기존 답변이 있으면 덮어쓰기
-       * 
-       * @param {number} stepId - 단계 ID
-       * @param {string} questionId - 질문 ID
-       * @param {any} value - 답변 값
+       * 답변 데이터 로드 (API)
+       * @param projectId - 프로젝트 ID
        */
-      updateStepData: (stepId: number, questionId: string, value: any) => {
+      loadAnswers: async (projectId: string) => {
+        set({ isLoading: true, error: null, projectId });
+        try {
+          const response = await wizardService.getAnswersWithProgress(projectId);
+          set({
+            wizardData: response.answers as WizardData,
+            currentStep: response.completedSteps + 1,
+            isLoading: false,
+          });
+        } catch (error) {
+          const message = error instanceof Error ? error.message : '답변 데이터 로드에 실패했습니다.';
+          set({ isLoading: false, error: message });
+          // 에러 시에도 기본 상태로 시작
+          set({ wizardData: {}, currentStep: 1 });
+        }
+      },
+
+      /**
+       * 단계별 질문 답변 업데이트 (로컬 상태)
+       * @param stepId - 단계 ID
+       * @param questionId - 질문 ID
+       * @param value - 답변 값
+       */
+      updateStepData: (stepId: number, questionId: string, value: unknown) => {
         set((state) => ({
           wizardData: {
             ...state.wizardData,
@@ -115,10 +140,36 @@ export const useWizardStore = create<WizardState>()(
       },
 
       /**
+       * 단계 답변 저장 (API)
+       * @param stepId - 저장할 단계 ID
+       */
+      saveStepAnswers: async (stepId: number) => {
+        const { projectId, wizardData } = get();
+        if (!projectId) {
+          console.warn('Project ID is not set');
+          return;
+        }
+
+        const stepAnswers = wizardData[stepId] || {};
+        set({ isSaving: true, error: null });
+
+        try {
+          await wizardService.saveStepAnswers(projectId, {
+            stepId,
+            answers: stepAnswers,
+          });
+          set({ isSaving: false });
+        } catch (error) {
+          const message = error instanceof Error ? error.message : '답변 저장에 실패했습니다.';
+          set({ isSaving: false, error: message });
+          throw error;
+        }
+      },
+
+      /**
        * 특정 단계의 데이터 조회
-       * 
-       * @param {number} stepId - 단계 ID
-       * @returns {Record<string, any>} 해당 단계의 답변 객체
+       * @param stepId - 단계 ID
+       * @returns 해당 단계의 답변 객체
        */
       getStepData: (stepId: number) => {
         const state = get();
@@ -127,11 +178,8 @@ export const useWizardStore = create<WizardState>()(
 
       /**
        * 단계 완료 여부 확인
-       * - 모든 필수 질문(required=true)에 답변이 있어야 완료
-       * - 빈 문자열, null, undefined는 미완료로 처리
-       * 
-       * @param {number} stepId - 확인할 단계 ID
-       * @returns {boolean} 완료 여부
+       * @param stepId - 확인할 단계 ID
+       * @returns 완료 여부
        */
       isStepCompleted: (stepId: number) => {
         const state = get();
@@ -151,7 +199,6 @@ export const useWizardStore = create<WizardState>()(
 
       /**
        * 다음 단계로 이동
-       * - 최대 단계를 초과하지 않음
        */
       goToNextStep: () => {
         set((state) => {
@@ -162,7 +209,6 @@ export const useWizardStore = create<WizardState>()(
 
       /**
        * 이전 단계로 이동
-       * - 최소 단계(1) 미만으로 가지 않음
        */
       goToPreviousStep: () => {
         set((state) => {
@@ -173,16 +219,32 @@ export const useWizardStore = create<WizardState>()(
 
       /**
        * 마법사 초기화
-       * - 첫 단계로 돌아가고 모든 데이터 삭제
-       * - 새 프로젝트 시작 시 호출
        */
       resetWizard: () => {
-        set({ currentStep: 1, wizardData: {} });
+        set({ 
+          currentStep: 1, 
+          wizardData: {},
+          projectId: null,
+          error: null,
+        });
+      },
+
+      /**
+       * 에러 초기화
+       */
+      clearError: () => {
+        set({ error: null });
       },
     }),
     {
       name: 'wizard-storage',
+      partialize: (state) => ({
+        currentStep: state.currentStep,
+        wizardData: state.wizardData,
+        projectId: state.projectId,
+      }),
     }
   )
 );
 
+export default useWizardStore;

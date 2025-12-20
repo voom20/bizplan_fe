@@ -2,7 +2,7 @@
  * 파일명: ToastContext.tsx
  * 
  * 파일 용도:
- * Toast 알림 시스템의 Context 및 Provider
+ * Toast 알림 시스템의 Provider 컴포넌트
  * - 전역에서 Toast를 표시할 수 있도록 Context 제공
  * - Toast 상태 관리 및 자동 제거 로직
  * 
@@ -11,35 +11,9 @@
  * 2. useToast() 훅으로 toast 함수 사용
  */
 
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { useState, useCallback, ReactNode } from 'react';
 import { ToastContainer } from './Toast';
-
-// Toast 타입 정의
-export type ToastType = 'success' | 'error' | 'warning' | 'info';
-
-// Toast 아이템 인터페이스
-export interface ToastItem {
-  id: string;
-  type: ToastType;
-  message: string;
-  title?: string;
-  duration?: number;
-}
-
-// Toast Context 타입
-interface ToastContextType {
-  toasts: ToastItem[];
-  addToast: (toast: Omit<ToastItem, 'id'>) => void;
-  removeToast: (id: string) => void;
-  // 편의 함수들
-  success: (message: string, title?: string) => void;
-  error: (message: string, title?: string) => void;
-  warning: (message: string, title?: string) => void;
-  info: (message: string, title?: string) => void;
-}
-
-// Context 생성
-const ToastContext = createContext<ToastContextType | undefined>(undefined);
+import { ToastContext, ToastItem, ToastContextType } from './ToastTypes';
 
 // 고유 ID 생성 함수
 const generateId = () => `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -122,20 +96,3 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
     </ToastContext.Provider>
   );
 };
-
-/**
- * useToast 커스텀 훅
- * 
- * 사용법:
- * const toast = useToast();
- * toast.success('저장되었습니다');
- * toast.error('오류가 발생했습니다');
- */
-export const useToast = (): ToastContextType => {
-  const context = useContext(ToastContext);
-  if (!context) {
-    throw new Error('useToast must be used within a ToastProvider');
-  }
-  return context;
-};
-
