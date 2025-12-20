@@ -109,9 +109,16 @@ export const useExportDocumentApi = (projectId: string) => {
   return useMutation({
     mutationFn: (options: ExportDocumentRequest) =>
       businessPlanService.exportDocument(projectId, options),
-    onSuccess: (result) => {
-      // 다운로드 URL로 파일 다운로드
-      window.open(result.downloadUrl, '_blank');
+    onSuccess: (blob, variables) => {
+      // Blob을 다운로드 URL로 변환하여 다운로드
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `business-plan.${variables.format}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     },
   });
 };

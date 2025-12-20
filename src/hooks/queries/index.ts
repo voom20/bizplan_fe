@@ -28,13 +28,11 @@ export {
 
 // 위저드 관련 훅
 export {
-  useWizardSteps,
-  useWizardStepDetail,
   useWizardAnswers,
+  useWizardAnswersWithProgress,
+  useWizardStepAnswers,
   useSaveWizardAnswers,
   useWizardProgress,
-  useNextWizardStep,
-  usePrevWizardStep,
 } from './useWizardQueries';
 
 // 재무 관련 훅

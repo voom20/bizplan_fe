@@ -7,11 +7,18 @@
  * - 토큰 갱신
  * - 사용자 정보 조회/수정
  * - 비밀번호 변경
+ * 
+ * 백엔드 API 엔드포인트:
+ * - POST /api/v1/auth/login
+ * - POST /api/v1/auth/signup
+ * - POST /api/v1/auth/logout
+ * - POST /api/v1/auth/refresh
+ * - GET/PATCH/DELETE /api/v1/users/me
+ * - PUT /api/v1/users/me/password
  */
 
 import api, { setTokens, clearTokens } from '@/common/axios';
 import type {
-  ApiResponse,
   LoginRequest,
   LoginResponse,
   SignupRequest,
@@ -20,14 +27,18 @@ import type {
   UserInfo,
 } from '@/types';
 
+/**
+ * 인증 API 엔드포인트 (백엔드 스펙에 맞춤)
+ */
 const AUTH_ENDPOINTS = {
-  LOGIN: '/auth/login',
-  SIGNUP: '/auth/signup',
-  LOGOUT: '/auth/logout',
-  REFRESH: '/auth/refresh',
-  ME: '/auth/me',
-  CHANGE_PASSWORD: '/auth/password',
-  DELETE_ACCOUNT: '/auth/account',
+  // Auth 관련
+  LOGIN: '/api/v1/auth/login',
+  SIGNUP: '/api/v1/auth/signup',
+  LOGOUT: '/api/v1/auth/logout',
+  REFRESH: '/api/v1/auth/refresh',
+  // Users 관련
+  ME: '/api/v1/users/me',
+  CHANGE_PASSWORD: '/api/v1/users/me/password',
 } as const;
 
 /**
@@ -40,17 +51,17 @@ export const authService = {
    * @returns 로그인 응답 (토큰, 사용자 정보)
    */
   login: async (credentials: LoginRequest): Promise<LoginResponse> => {
-    const response = await api.post<ApiResponse<LoginResponse>>(
+    const response = await api.post<LoginResponse>(
       AUTH_ENDPOINTS.LOGIN,
       credentials
     );
     
-    const { accessToken, refreshToken } = response.data.data;
+    const { accessToken, refreshToken } = response.data;
     
     // 토큰 저장
     setTokens(accessToken, refreshToken);
     
-    return response.data.data;
+    return response.data;
   },
 
   /**
@@ -59,11 +70,11 @@ export const authService = {
    * @returns 생성된 사용자 정보
    */
   signup: async (userData: SignupRequest): Promise<UserInfo> => {
-    const response = await api.post<ApiResponse<UserInfo>>(
+    const response = await api.post<UserInfo>(
       AUTH_ENDPOINTS.SIGNUP,
       userData
     );
-    return response.data.data;
+    return response.data;
   },
 
   /**
@@ -80,12 +91,25 @@ export const authService = {
   },
 
   /**
+   * 토큰 갱신
+   * @param refreshToken 리프레시 토큰
+   * @returns 새로운 토큰
+   */
+  refreshToken: async (refreshToken: string): Promise<LoginResponse> => {
+    const response = await api.post<LoginResponse>(
+      AUTH_ENDPOINTS.REFRESH,
+      { refreshToken }
+    );
+    return response.data;
+  },
+
+  /**
    * 현재 사용자 정보 조회
    * @returns 사용자 정보
    */
   getMe: async (): Promise<UserInfo> => {
-    const response = await api.get<ApiResponse<UserInfo>>(AUTH_ENDPOINTS.ME);
-    return response.data.data;
+    const response = await api.get<UserInfo>(AUTH_ENDPOINTS.ME);
+    return response.data;
   },
 
   /**
@@ -94,11 +118,11 @@ export const authService = {
    * @returns 수정된 사용자 정보
    */
   updateProfile: async (data: UpdateProfileRequest): Promise<UserInfo> => {
-    const response = await api.patch<ApiResponse<UserInfo>>(
+    const response = await api.patch<UserInfo>(
       AUTH_ENDPOINTS.ME,
       data
     );
-    return response.data.data;
+    return response.data;
   },
 
   /**
@@ -106,7 +130,10 @@ export const authService = {
    * @param data 현재 비밀번호 및 새 비밀번호
    */
   changePassword: async (data: ChangePasswordRequest): Promise<void> => {
-    await api.put(AUTH_ENDPOINTS.CHANGE_PASSWORD, data);
+    await api.put(AUTH_ENDPOINTS.CHANGE_PASSWORD, {
+      ...data,
+      newPasswordConfirm: data.newPassword, // 백엔드 요구사항
+    });
   },
 
   /**
@@ -114,7 +141,7 @@ export const authService = {
    * @param password 비밀번호 확인
    */
   deleteAccount: async (password: string): Promise<void> => {
-    await api.delete(AUTH_ENDPOINTS.DELETE_ACCOUNT, {
+    await api.delete(AUTH_ENDPOINTS.ME, {
       data: { password },
     });
     clearTokens();
@@ -122,4 +149,3 @@ export const authService = {
 };
 
 export default authService;
-
