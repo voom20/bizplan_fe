@@ -130,7 +130,7 @@ export const ProjectCreate: React.FC = () => {
       setProjectId(project.id);
       
       navigate('/wizard/1');
-    } catch (err) {
+    } catch {
       setError(storeError || '프로젝트 생성에 실패했습니다.');
     }
   };
