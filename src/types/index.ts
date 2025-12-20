@@ -111,7 +111,7 @@ export interface Answer {
 /** 마법사 전체 데이터 (단계ID → 질문ID → 답변) */
 export interface WizardData {
   [stepId: number]: {
-    [questionId: string]: any;
+    [questionId: string]: unknown;
   };
 }
 

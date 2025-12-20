@@ -47,7 +47,8 @@ test.describe('프로필 페이지', () => {
   test('탭 네비게이션이 있다', async ({ page }) => {
     // 탭 버튼들 확인 (role="tab"이 아닐 수 있음)
     const profileTab = page.getByRole('button', { name: /프로필|정보/i }).first();
-    const securityTab = page.getByRole('button', { name: /보안|비밀번호/i }).first();
+    // securityTab은 향후 사용 예정
+    // const securityTab = page.getByRole('button', { name: /보안|비밀번호/i }).first();
     
     // 탭 또는 버튼 형태로 존재할 수 있음
     if (await profileTab.isVisible()) {
